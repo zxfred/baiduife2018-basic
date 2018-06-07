@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">    
+    <title>IFE ECMAScript Day 16</title>
+</head>
+<body>        
+    <input id="first-number" type="number" value="0" placeholder="第一个数字">
+    <input id="second-number" type="number" value="0" placeholder="第二个数字">
+    <button id="add-btn">加</button>
+    <button id="minus-btn">减</button>
+    <button id="times-btn">乘</button>
+    <button id="divide-btn">除</button>
+    <p id="result">运算结果</p>
+    <script>
+        let resultElem = document.getElementById('result')
+        let btns = document.getElementsByTagName('button')
+        for(let i = 0; i < btns.length; i++){
+            btns[i].addEventListener('click', function() {
+                let result; 
+                let first = parseFloat(document.getElementById('first-number').value)
+                let sec = parseFloat(document.getElementById('second-number').value)
+                switch (i) {
+                    case 0:
+                        result = first + sec
+                    break
+                    case 1:
+                        result = first - sec
+                    break
+                    case 2:
+                        result = first * sec
+                    break
+                    case 3:
+                        if (sec == 0) {
+                            alert('除数不能为0')
+                        } else {
+                            result = first / sec
+                        }
+                    break
+                }
+                if (typeof result === 'undefined') {
+                    result = '运算错误'
+                }
+                resultElem.innerHTML = '运算结果:' + result
+            })
+        }
+    </script>
+</body>
+</html>
