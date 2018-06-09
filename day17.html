@@ -10,33 +10,67 @@
     <input id="dec-number" type="number" placeholder="输入一个十进制非负整数">
     <button id="trans-btn">转化为二进制</button>
     <p id="result">运算结果</p>
+
+    <input id="dec-number2" type="number" placeholder="输入一个十进制非负整数">
+    <input id="bin-bit" type="number" placeholder="输入转化后二进制数字位数">
+    <button id="trans-btn2">转化为二进制</button>
+    <p id="result2">运算结果</p>
+
     <script>
         function dec2bin(decNumber) {
-            // 在这里实现你的转化方法，注意需要判断输入必须为一个非负整数
             let bin = ''
-            let calculate = function (decNumber) {
-                let remainder = decNumber % 2 // 求余数
-                let quotient = Math.floor(decNumber / 2) // 求商
+            function fn(dec) {
+                let remainder = dec % 2 // 求余数
+                let quotient = Math.floor(dec / 2) // 求商
                 bin = remainder.toString() + bin // 把商逆序相加
                 if (quotient !== 0) { // 判断是不是0
-                    calculate(quotient)
-                }
+                    return fn(quotient)
+                } else {
+                    return bin
+                } 
             }
+            return fn
+            // 更简单的方法: return parseInt(v).toString(2)                
+        }   
+
+        // 当点击转化按钮时，将输入的十进制数字转化为二进制，并显示在result的p标签内
+        // 绑定点击事件   
+        document.getElementById('trans-btn').addEventListener('click', function() {
+            let v = parseInt(document.getElementById('dec-number').value)            
             let result = document.getElementById('result')            
-            if (typeof decNumber === 'number' && decNumber >= 0 && decNumber % 1 === 0) {
-                calculate(decNumber)
-                result.innerHTML = '运算结果: ' + bin
+            if (typeof v === 'number' && v >= 0 && v % 1 === 0) {
+                let calc = new dec2bin()
+                result.innerHTML = '运算结果: ' + calc(v)
             } else {
                 result.innerHTML = '运算结果: 请输入一个正确的正整数'
             }
-        }
+        })
+
+        /* ---------- 分割线 ---------- */
 
         // 实现当点击转化按钮时，将输入的十进制数字转化为二进制，并显示在result的p标签内
-        // 绑定点击事件   
-        let btn = document.getElementById('trans-btn')                 
-        btn.addEventListener('click', function() {
-            let v = parseInt(document.getElementById('dec-number').value)
-            dec2bin(v)
+        // 新的需求是，转化显示后的二进制数为bin-bit中输入的数字宽度，例如
+        // dec-number为5，bin-bit为5，则转化后数字为00101
+        // 如果bin-bit小于转化后的二进制本身位数，则使用原本的位数，如dec-number为5，bin-bit为2，依然输出101，但同时在console中报个错
+
+        document.getElementById('trans-btn2').addEventListener('click', function() {
+            let v = parseInt(document.getElementById('dec-number2').value)
+            let binBit = parseInt(document.getElementById('bin-bit').value)
+            let result2 = document.getElementById('result2')                        
+            let calc = new dec2bin()
+            if (v && binBit) {
+                if (calc(v).length > parseInt(binBit)) {
+                    console.log('出错啦')
+                } else {
+                    console.log(v);
+                    console.log(calc(v));
+                    console.log(binBit);
+                    console.log(parseInt(calc(v)).toPrecision(binBit));
+                    result2.innerHTML = '运算结果: ' + parseInt(calc(v)).toPrecision(binBit).split('.')[1]          
+                }
+            } else {
+
+            }
         })
     </script>
 </body>
