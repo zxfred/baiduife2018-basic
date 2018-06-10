@@ -114,7 +114,18 @@
 
         /* ---------- 分割线 ---------- */
 
-                
+        let sayHello = () => {
+            let now = new Date();
+            let hour = now.getHours()
+            if (hour < 12) {
+                console.log('Good Morning')
+            } else if (hour < 18) {
+                console.log('Good Afternoon')
+            } else {
+                console.log('Good Evening')                     
+            }
+        }
+        sayHello()
     </script>
 </body>
 
