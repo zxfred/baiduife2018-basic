@@ -19,6 +19,7 @@
     <script>
         function dec2bin(decNumber) {
             let bin = ''
+
             function fn(dec) {
                 let remainder = dec % 2 // 求余数
                 let quotient = Math.floor(dec / 2) // 求商
@@ -27,22 +28,22 @@
                     return fn(quotient)
                 } else {
                     return bin
-                } 
+                }
             }
             return fn
             // 更简单的方法: return parseInt(v).toString(2)                
-        }   
+        }
 
         // 当点击转化按钮时，将输入的十进制数字转化为二进制，并显示在result的p标签内
         // 绑定点击事件   
-        document.getElementById('trans-btn').addEventListener('click', function() {
+        document.getElementById('trans-btn').addEventListener('click', function () {
             let input = document.getElementById('dec-number')
             if (input.value !== '') {
-                var v = parseInt(input.value)            
+                var v = parseInt(input.value)
             } else {
                 // console.log(error);
             }
-            let result = document.getElementById('result')            
+            let result = document.getElementById('result')
             if (typeof v === 'number' && v >= 0 && v % 1 === 0) {
                 let calc = new dec2bin()
                 result.innerHTML = '运算结果: ' + calc(v)
@@ -58,24 +59,39 @@
         // dec-number为5，bin-bit为5，则转化后数字为00101
         // 如果bin-bit小于转化后的二进制本身位数，则使用原本的位数，如dec-number为5，bin-bit为2，依然输出101，但同时在console中报个错
 
-        document.getElementById('trans-btn2').addEventListener('click', function() {
+        document.getElementById('trans-btn2').addEventListener('click', function () {
             let numInput = document.getElementById('dec-number2')
-            let binBitInput = document.getElementById('bin-bit')            
+            let binBitInput = document.getElementById('bin-bit')
             if (numInput.value !== '' && binBitInput.value !== '') {
                 var v = parseInt(numInput.value)
                 var binBit = parseInt(binBitInput.value)
-                let result2 = document.getElementById('result2')                        
+                let result2 = document.getElementById('result2')
                 let calc = new dec2bin()
                 let r = calc(v)
                 if (r.length > binBit) {
-                    result2.innerHTML = '运算结果: ' + parseInt(r).toPrecision(binBit).split('.')[1] + r        
+                    result2.innerHTML = '运算结果: ' + parseInt(r).toPrecision(binBit).split('.')[1] + r
                 } else {
                     console.log('出错啦')
                 }
             } else {
-                result2.innerHTML = '运算结果: 请输入正确的数字'   
+                result2.innerHTML = '运算结果: 请输入正确的数字'
             }
         })
+
+        /* ---------- 分割线 ---------- */
+
+        function printPA () {
+            let str = ''
+            for (let i = 0; i < 100; i++) {
+                if ((i + 1) % 3 === 0 || (i + 1).toString().search('3') !== -1) {
+                    str = str + ',PA'
+                } else {
+                    str = str + ',' + (i + 1).toString()
+                }
+            }
+            console.log(str.replace(',',''));
+        }
+        printPA();
     </script>
 </body>
 
