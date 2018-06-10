@@ -38,7 +38,7 @@
         document.getElementById('trans-btn').addEventListener('click', function() {
             let input = document.getElementById('dec-number')
             if (input.value !== '') {
-                let v = parseInt(input.value)            
+                var v = parseInt(input.value)            
             } else {
                 // console.log(error);
             }
@@ -60,30 +60,21 @@
 
         document.getElementById('trans-btn2').addEventListener('click', function() {
             let numInput = document.getElementById('dec-number2')
-            if (numInput.value !== '') {
-                let v = parseInt(numInput.value)
+            let binBitInput = document.getElementById('bin-bit')            
+            if (numInput.value !== '' && binBitInput.value !== '') {
+                var v = parseInt(numInput.value)
+                var binBit = parseInt(binBitInput.value)
+                let result2 = document.getElementById('result2')                        
+                let calc = new dec2bin()
+                let r = calc(v)
+                if (r.length > binBit) {
+                    result2.innerHTML = '运算结果: ' + parseInt(r).toPrecision(binBit).split('.')[1] + r        
+                } else {
+                    console.log('出错啦')
+                }
+            } else {
+                result2.innerHTML = '运算结果: 请输入正确的数字'   
             }
-            let binBitInput = document.getElementById('bin-bit')
-            if (binBitInput.value !== '') {
-                let binBit = parseInt(binBitInput.value)
-            }
-            let result2 = document.getElementById('result2')                        
-            let calc = new dec2bin()
-            // console.log(calc);
-            console.log(calc(v));
-            // if (v && binBit) {
-            //     if (calc(v).length > parseInt(binBit)) {
-            //         console.log('出错啦')
-            //     } else {
-            //         console.log(v);
-            //         console.log(calc(v));
-            //         console.log(binBit);
-            //         // console.log(parseInt(calc(v)).toPrecision(binBit));
-            //         // result2.innerHTML = '运算结果: ' + parseInt(calc(v)).toPrecision(binBit).split('.')[1]          
-            //     }
-            // } else {
-
-            // }
         })
     </script>
 </body>
