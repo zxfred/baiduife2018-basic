@@ -16,6 +16,9 @@
     <button id="trans-btn2">转化为二进制</button>
     <p id="result2">运算结果</p>
 
+    <table id="multi-table">
+    </table>
+
     <script>
         function dec2bin(decNumber) {
             let bin = ''
@@ -80,7 +83,7 @@
 
         /* ---------- 分割线 ---------- */
 
-        function printPA () {
+        function printPA() {
             let str = ''
             for (let i = 0; i < 100; i++) {
                 if ((i + 1) % 3 === 0 || (i + 1).toString().search('3') !== -1) {
@@ -89,9 +92,29 @@
                     str = str + ',' + (i + 1).toString()
                 }
             }
-            console.log(str.replace(',',''));
+            console.log(str.replace(',', ''))
         }
         printPA();
+
+        /* ---------- 分割线 ---------- */
+
+        function printMultiTable() {
+            let table = document.getElementById('multi-table')
+            for(let i = 1; i < 10; i++){
+                let tr = document.createElement('tr')
+                for(let j = 1; j < i + 1; j++){
+                    let td = document.createElement('td')
+                    td.innerHTML = i + '*' + j + '=' + (i*j)
+                    tr.appendChild(td)
+                }
+                table.appendChild(tr)
+            }
+        }
+        printMultiTable()
+
+        /* ---------- 分割线 ---------- */
+
+                
     </script>
 </body>
 
