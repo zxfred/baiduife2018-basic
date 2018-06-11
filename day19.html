@@ -35,21 +35,79 @@
     </div>
     <script>
 
+    // 在这个练习中仅允许使用以下 DOM 方法或属性，不得使用高级选择器
+    // getElementById()
+    // getElementsByTagName()
+    // childNodes
+    // parentNode
+
     function getAllListItem() {
         // 返回页面中所有li标签
+        let lis = document.getElementsByTagName('li')
+        // document.querySelectorAll('li')
+        return lis
     }
+    getAllListItem()
 
     function findAllHtmlSpanInOneSection(sectionId) {
         // 返回某个section下所有span中内容为HTML的span标签
+        if (sectionId) {   
+            let section = document.getElementById(sectionId)
+            let spans = section.getElementsByTagName('span')
+            // document.querySelectorAll('#sectionId span')
+            let spanArr = []
+            for(let i = 0; i < spans.length; i++){
+                if (spans[i].innerText === 'HTML') {
+                    spanArr.push(spans[i])
+                }
+            }
+            return spanArr
+        } else {
+            return -1
+        }
     }
+    findAllHtmlSpanInOneSection('news-normal')
 
     function findListItem(sectionId, spanCont) {
         // 返回某个section下，所有所包含span内容为spanCont的LI标签
+        if (sectionId && spanCont) {
+            let section = document.getElementById(sectionId)
+            let lis = section.getElementsByTagName('li')
+            // let lis = document.querySelectorAll('#sectionId li')
+            for(let i = 0; i < lis.length; i++){
+                let spans = lis[i].getElementsByTagName('span')
+            }
+             let liArr = []
+            // for(let i = 0; i < lis.length; i++){
+            //     let spans = lis[i].getElementsByTagName('span')
+            //     for(let j = 0; j < spans.length; j++){
+            //         if (spans[j].innerText === spanCont) {
+            //             liArr.push(lis[i])
+            //         }
+            //     }
+            // }
+            return liArr
+            console.log(liArr)
+        } else {
+            return -1
+        }
     }
+    findListItem('news-top', 'JS')
 
     function getActiveLinkContent(sectionId) {
         // 返回某个section下，class为active的链接中包含的文字内容
+        if (sectionId) {
+            let section = document.getElementById(sectionId)
+            let nodes = section.getElementsByClassName('active')
+            // document.querySelectorAll('#sectionId .active')
+            for(let i = 0; i < nodes.length; i++){
+            console.log(nodes[i].innerText)
+            }     
+        } else {
+            return -1
+        }
     }
+    getActiveLinkContent('news-top')
 
     </script>
 </body>
