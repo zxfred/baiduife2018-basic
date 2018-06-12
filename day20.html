@@ -14,6 +14,19 @@
         select.show {
             display: inline
         }
+
+        .palette {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .palette li {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #000;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -22,6 +35,8 @@
         <input id="name" type="text">
         <button id="submit-btn">Submit</button>
     </div>
+
+    <!--  分割线  -->
 
     <label>
         <input id="school" name="status" type="radio"> School
@@ -40,6 +55,21 @@
         <option>百度</option>
         <option>爱奇艺</option>
     </select>
+
+    <!--  分割线  -->
+
+    <ul class="palette">
+        <li style="background-color:crimson"></li>
+        <li style="background-color:bisque"></li>
+        <li style="background-color:blueviolet"></li>
+        <li style="background-color:coral"></li>
+        <li style="background-color:chartreuse"></li>
+        <li style="background-color:darkolivegreen"></li>
+        <li style="background-color:cyan"></li>
+        <li style="background-color:#194738"></li>
+    </ul>
+
+    <p class="color-picker"></p>
 </body>
 <script>
     (function () {
@@ -82,11 +112,27 @@
                 }
             })
         }
+    })();
+
+    /* ---------- 分割线 ---------- */
+
+    (function () {
+        var list = document.querySelectorAll(".palette li");
+        for (var i = i = 0, len = list.length; i < len; i++) {
+            list[i].addEventListener('click', function (e) {
+                var t = e.target;
+                var c = t.style.backgroundColor;
+                console.log(c)
+                var p = document.getElementsByClassName("color-picker")[0]
+                p.innerHTML = c;
+                p.style.color = c;
+            })
+        }
     })()
 
     /* ---------- 分割线 ---------- */
 
-    
+        
 </script>
 
 </html>
