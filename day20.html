@@ -6,11 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>IFE ECMAScript Day 20</title>
+    <style>
+        select {
+            display: none;
+        }
+
+        select.show {
+            display: inline
+        }
+    </style>
 </head>
 
 <body>
-    <input id="name" type="text">
-    <button id="submit-btn">Submit</button>
+    <div>
+        <input id="name" type="text">
+        <button id="submit-btn">Submit</button>
+    </div>
+
+    <label>
+        <input id="school" name="status" type="radio"> School
+    </label>
+    <label>
+        <input id="company" name="status" type="radio"> Company
+    </label>
+
+    <select id="school-select">
+        <option>北京邮电大学</option>
+        <option>黑龙江大学</option>
+        <option>华中科技大学</option>
+    </select>
+
+    <select id="company-select">
+        <option>百度</option>
+        <option>爱奇艺</option>
+    </select>
 </body>
 <script>
     (function () {
@@ -19,6 +48,7 @@
         btn.addEventListener('click', () => {
             console.log(nameInput.value)
         })
+
         function listenKey(e) { //按键信息对象e以函数参数的形式传递
             if (e.key === "Enter") {
                 console.log(nameInput.value)
@@ -31,13 +61,32 @@
             document.addEventListener('keydown', listenKey) // 这里如果是 keypress 事件, 捕获不到 Esc 这个键, 故改为 keydown
         })
         nameInput.addEventListener('blur', function () {
-            document.removeEventListener('keydown', listenKey)  
+            document.removeEventListener('keydown', listenKey)
         })
+    })(); // 立即执行函数后面要加上分号避免浏览器报错
+
+    /* ---------- 分割线 ---------- */
+
+    (function () {
+        let radios = [document.querySelector('#school'), document.querySelector('#company')]
+        let selects = [document.querySelector('#school-select'), document.querySelector('#company-select')]
+        for (let i = 0; i < radios.length; i++) {
+            radios[i].addEventListener('change', function () { // 绑定事件
+                for (let i = 0; i < radios.length; i++) {
+                    if (radios[i].checked) {
+                        selects[i].className = 'show'
+                    } else {
+                        console.log('11')
+                        selects[i].className = ''
+                    }
+                }
+            })
+        }
     })()
 
-    /* ---------- 分割线 ---------- */    
+    /* ---------- 分割线 ---------- */
 
-        
+    
 </script>
 
 </html>
