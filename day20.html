@@ -1,21 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>IFE ECMAScript Day 20</title>
 </head>
+
 <body>
-    <input id="name" type="text">    
+    <input id="name" type="text">
     <button id="submit-btn">Submit</button>
 </body>
 <script>
-    (function() {
+    (function () {
         let btn = document.getElementById('submit-btn')
+        let nameInput = document.getElementById('name')
         btn.addEventListener('click', () => {
-            console.log(document.getElementById('name').value)
+            console.log(nameInput.value)
+        })
+        function listenKey(e) { //按键信息对象e以函数参数的形式传递
+            if (e.key === "Enter") {
+                console.log(nameInput.value)
+            }
+            if (e.key === 'Escape') {
+                nameInput.value = ''
+            }
+        }
+        nameInput.addEventListener('focus', function () {
+            document.addEventListener('keydown', listenKey) // 这里如果是 keypress 事件, 捕获不到 Esc 这个键, 故改为 keydown
+        })
+        nameInput.addEventListener('blur', function () {
+            document.removeEventListener('keydown', listenKey)  
         })
     })()
+
+    /* ---------- 分割线 ---------- */    
+
+        
 </script>
+
 </html>
