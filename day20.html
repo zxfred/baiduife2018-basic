@@ -27,13 +27,23 @@
             border: 1px solid #000;
             cursor: pointer;
         }
+
+        .container {
+            width: 480px;
+            height: 480px;
+            overflow: hidden;
+        }
+
+        .container .sprite {
+            position: relative;
+        }
     </style>
 </head>
 
 <body>
 
     <!--  task1  -->
-    
+
     <div>
         <input id="name" type="text">
         <button id="submit-btn">Submit</button>
@@ -80,12 +90,15 @@
     <button id="fade-btn">淡出</button>
 
     <!--  task5  -->
-    
+
+    <div class="container">
+        <img class="sprite" src="http://ife.baidu.com/2016/static/img/erik_ce204002.jpg" alt="">
+    </div>
+
 </body>
 <script>
-
     /* ---------- task1 ---------- */
-    
+
     (function () {
         let btn = document.getElementById('submit-btn')
         let nameInput = document.getElementById('name')
@@ -148,19 +161,20 @@
 
     (function () {
         let fadeBtn = document.querySelector('#fade-btn')
-        let obj = document.querySelector('#fade-obj')  
+        let obj = document.querySelector('#fade-obj')
         let isOut = true // 状态控制, 是否是淡出
         let transFn = function () {
-            obj.style.opacity = isOut ? 1 : 0 
+            obj.style.opacity = isOut ? 1 : 0
             fadeBtn.disabled = true
             let trans = setInterval(() => {
-                if (isOut ? obj.style.opacity > 0 : obj.style.opacity < 1) {                
-                    obj.style.opacity = isOut ? parseFloat(obj.style.opacity) - 0.01 : parseFloat(obj.style.opacity) + 0.01 //需要对 opacity 进行处理否则会出现异常
+                if (isOut ? obj.style.opacity > 0 : obj.style.opacity < 1) {
+                    obj.style.opacity = isOut ? parseFloat(obj.style.opacity) - 0.01 : parseFloat(obj.style
+                        .opacity) + 0.01 //需要对 opacity 进行处理否则会出现异常
                 } else {
                     fadeBtn.disabled = false
                     isOut = !isOut
-                    fadeBtn.innerHTML = isOut ? '淡出' : '淡入'                    
-                    clearInterval(trans)                    
+                    fadeBtn.innerHTML = isOut ? '淡出' : '淡入'
+                    clearInterval(trans)
                 }
             }, 10)
         }
@@ -168,8 +182,25 @@
     })();
 
     /* ---------- task5 ---------- */
-    
 
+    (function () {
+        let sprite = document.querySelector('.sprite')
+        let frameCount = 17 // 总帧数
+        let frame = 0 // 当前播放第几帧
+        let isForward = true // 动画播放顺序
+        let trans = setInterval(() => {
+            if (isForward) {
+                frame = frame + 1
+            } else {
+                frame = frame - 1
+            }
+            if (frame == frameCount - 1 || frame == 0) { // 第一帧和最后一帧的时候改变播放顺序
+                isForward = !isForward
+            }
+            sprite.style.top = - (480 * frame) + 'px'                            
+        }, 80)
+    })();
+    
 </script>
 
 </html>
