@@ -41,15 +41,17 @@
     // childNodes
     // parentNode
 
-    function getAllListItem() {
+    (function getAllListItem() {
         // 返回页面中所有li标签
         let lis = document.getElementsByTagName('li')
         // document.querySelectorAll('li')
+        console.log(lis)
         return lis
-    }
-    getAllListItem()
+    })();
 
-    function findAllHtmlSpanInOneSection(sectionId) {
+    /* ---------- 分割线 ---------- */
+
+    (function findAllHtmlSpanInOneSection(sectionId) {
         // 返回某个section下所有span中内容为HTML的span标签
         if (sectionId) {   
             let section = document.getElementById(sectionId)
@@ -61,14 +63,17 @@
                     spanArr.push(spans[i])
                 }
             }
+            console.log(spanArr)
             return spanArr
         } else {
+            console.log(-1)
             return -1
         }
-    }
-    findAllHtmlSpanInOneSection('news-normal')
+    })('news-normal');
 
-    function findListItem(sectionId, spanCont) {
+    /* ---------- 分割线 ---------- */
+
+    (function findListItem(sectionId, spanCont) {
         // 返回某个section下，所有所包含span内容为spanCont的LI标签
         if (sectionId && spanCont) {
             let section = document.getElementById(sectionId)
@@ -91,14 +96,17 @@
                     }
                 }
             }
+            console.log(liArr)
             return liArr
         } else {
+            console.log(-1)
             return -1
         }
-    }
-    findListItem('news-top', 'JS')
+    })('news-top', 'JS');
 
-    function getActiveLinkContent(sectionId) {
+    /* ---------- 分割线 ---------- */    
+
+    (function getActiveLinkContent(sectionId) {
         // 返回某个section下，class为active的链接中包含的文字内容
         if (sectionId) {
             let section = document.getElementById(sectionId)
@@ -110,8 +118,7 @@
         } else {
             return -1
         }
-    }
-    getActiveLinkContent('news-top')
+    })('news-top');
 
     </script>
 </body>
