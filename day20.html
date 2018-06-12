@@ -31,12 +31,15 @@
 </head>
 
 <body>
+
+    <!--  task1  -->
+    
     <div>
         <input id="name" type="text">
         <button id="submit-btn">Submit</button>
     </div>
 
-    <!--  分割线  -->
+    <!--  task2  -->
 
     <label>
         <input id="school" name="status" type="radio"> School
@@ -56,7 +59,7 @@
         <option>爱奇艺</option>
     </select>
 
-    <!--  分割线  -->
+    <!--  task3  -->
 
     <ul class="palette">
         <li style="background-color:crimson"></li>
@@ -70,8 +73,19 @@
     </ul>
 
     <p class="color-picker"></p>
+
+    <!--  task4  -->
+
+    <div id="fade-obj" style="width:300px;height:300px;background:#000"></div>
+    <button id="fade-btn">淡出</button>
+
+    <!--  task5  -->
+    
 </body>
 <script>
+
+    /* ---------- task1 ---------- */
+    
     (function () {
         let btn = document.getElementById('submit-btn')
         let nameInput = document.getElementById('name')
@@ -95,7 +109,7 @@
         })
     })(); // 立即执行函数后面要加上分号避免浏览器报错
 
-    /* ---------- 分割线 ---------- */
+    /* ---------- task2 ---------- */
 
     (function () {
         let radios = [document.querySelector('#school'), document.querySelector('#company')]
@@ -114,7 +128,7 @@
         }
     })();
 
-    /* ---------- 分割线 ---------- */
+    /* ---------- task3 ---------- */
 
     (function () {
         var list = document.querySelectorAll(".palette li");
@@ -128,11 +142,34 @@
                 p.style.color = c;
             })
         }
-    })()
+    })();
 
-    /* ---------- 分割线 ---------- */
+    /* ---------- task4 ---------- */
 
-        
+    (function () {
+        let fadeBtn = document.querySelector('#fade-btn')
+        let obj = document.querySelector('#fade-obj')  
+        let isOut = true // 状态控制, 是否是淡出
+        let transFn = function () {
+            obj.style.opacity = isOut ? 1 : 0 
+            fadeBtn.disabled = true
+            let trans = setInterval(() => {
+                if (isOut ? obj.style.opacity > 0 : obj.style.opacity < 1) {                
+                    obj.style.opacity = isOut ? parseFloat(obj.style.opacity) - 0.01 : parseFloat(obj.style.opacity) + 0.01 //需要对 opacity 进行处理否则会出现异常
+                } else {
+                    fadeBtn.disabled = false
+                    isOut = !isOut
+                    fadeBtn.innerHTML = isOut ? '淡出' : '淡入'                    
+                    clearInterval(trans)                    
+                }
+            }, 10)
+        }
+        fadeBtn.addEventListener('click', transFn)
+    })();
+
+    /* ---------- task5 ---------- */
+    
+
 </script>
 
 </html>
