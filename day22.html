@@ -37,29 +37,34 @@
     <p id="result"></p>
 
     <script>
+
         let btns = document.querySelectorAll('button')
         let r = document.querySelector('#result')
-        isNumber = (o) => { // 是否数字
-            return Object.prototype.toString.call(o).slice(8, -1) === 'Number'
-        }
-        checkedInput = () => {
+
+        checkedInput = () => { // 获取选中 radio 的 value 值
             let radios = document.getElementsByName('math-obj')
             for (let i = 0; i < radios.length; i++) {
                 if (radios[i].checked) {
                     return radios[i].value
+                    break
                 }
             }
         }
+
         btns[0].addEventListener('click', function () {
             let i = checkedInput()
-            let v = document.querySelector('#num-' + i).value
-            console.log(v)
-            if (isNumber(v)) {
-                r.innerHTML = '是数字'
+            if (i) {
+                let v = document.querySelector('#num-' + i).value
+                if (Number(v)) {
+                    r.innerHTML = '是数字'
+                } else {
+                    r.innerHTML = '不是数字'
+                }
             } else {
-                r.innerHTML = '不是数字'
+                console.log('没有输入框被选中')
             }
         })
+
     </script>
 </body>
 
