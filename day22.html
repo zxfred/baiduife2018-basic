@@ -51,7 +51,21 @@
             }
         }
 
-        btns[0].addEventListener('click', function () {
+        btns[0].addEventListener('click', function () { //检验是不是数字
+            let i = checkedInput()
+            if (i) {
+                let v = document.querySelector('#num-' + i).value
+                if (Number(v)) {
+                    r.innerHTML = '是数字'
+                } else {
+                    r.innerHTML = '不是数字'
+                }
+            } else {
+                console.log('没有输入框被选中')
+            }
+        })
+
+        btns[1].addEventListener('click', function () {
             let i = checkedInput()
             if (i) {
                 let v = document.querySelector('#num-' + i).value
