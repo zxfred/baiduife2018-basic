@@ -38,18 +38,23 @@
 
     <script>
         let btns = document.querySelectorAll('button')
-        let numA = document.querySelector('#num-a').value
-        let numB = document.querySelector('#num-b').value
         let r = document.querySelector('#result')
-        console.log(btns)
         isNumber = (o) => { // 是否数字
             return Object.prototype.toString.call(o).slice(8, -1) === 'Number'
         }
         checkedInput = () => {
-            
+            let radios = document.getElementsByName('math-obj')
+            for (let i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    return radios[i].value
+                }
+            }
         }
         btns[0].addEventListener('click', function () {
-            if (isNumber(numA)) {
+            let i = checkedInput()
+            let v = document.querySelector('#num-' + i).value
+            console.log(v)
+            if (isNumber(v)) {
                 r.innerHTML = '是数字'
             } else {
                 r.innerHTML = '不是数字'
