@@ -40,6 +40,8 @@
 
         let btns = document.querySelectorAll('button')
         let r = document.querySelector('#result')
+        let iA = document.querySelector('#num-a')
+        let iB = document.querySelector('#num-b')
 
         checkedInput = () => { // 获取选中 radio 的 value 值
             let radios = document.getElementsByName('math-obj')
@@ -51,7 +53,7 @@
             }
         }
 
-        btns[0].addEventListener('click', function () { //检验是不是数字
+        btns[0].addEventListener('click', function () { // 检验是不是数字
             let i = checkedInput()
             if (i) {
                 let v = document.querySelector('#num-' + i).value
@@ -66,16 +68,10 @@
         })
 
         btns[1].addEventListener('click', function () {
-            let i = checkedInput()
-            if (i) {
-                let v = document.querySelector('#num-' + i).value
-                if (Number(v)) {
-                    r.innerHTML = '是数字'
-                } else {
-                    r.innerHTML = '不是数字'
-                }
+            if (iA.value && iB.value) {
+                r.innerHTML = Number(iA.value).toPrecision(parseFloat(iB.value).length > iA.value.length ? parseFloat(iB.value) + iA.value.length : iA.value.length)
             } else {
-                console.log('没有输入框被选中')
+                console.log('输入框不能为空')
             }
         })
 
