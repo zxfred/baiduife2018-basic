@@ -69,7 +69,7 @@
 
         btns[1].addEventListener('click', function () {
             if (iA.value && iB.value) {
-                r.innerHTML = Number(iA.value).toPrecision(parseFloat(iB.value).length > iA.value.length ? parseFloat(iB.value) + iA.value.length : iA.value.length)
+                r.innerHTML = Number(iA.value).toFixed(parseFloat(iB.value))
             } else {
                 console.log('输入框不能为空')
             }
