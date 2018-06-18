@@ -75,6 +75,22 @@
             }
         })
 
+        btn[2].addEventListener('click', function () {
+            let i = checkedInput()
+            if (i) {
+                let v = document.querySelector('#num-' + i).value
+                if (Number(v) > 0) {
+                    r.innerHTML = v
+                } else if (Number(v) < 0) {
+                    r.innerHTML = 0 - v
+                } else {
+                    r.innerHTML = 0
+                }
+            } else {
+                console.log('没有输入框被选中')
+            }
+        })
+
     </script>
 </body>
 
