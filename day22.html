@@ -43,27 +43,27 @@
         let iA = document.querySelector('#num-a')
         let iB = document.querySelector('#num-b')
 
-        checkedInput = () => { // 获取选中 radio 的 value 值
+        getCheckedV = () => { // 获取选中 radio 的 value 值
             let radios = document.getElementsByName('math-obj')
             for (let i = 0; i < radios.length; i++) {
                 if (radios[i].checked) {
-                    return radios[i].value
+                    var v = document.querySelector('#num-' + radios[i].value).value
                     break
                 }
+            }
+            if (Number(v)) {
+                return Number(v)
+            } else {
+                return -1
             }
         }
 
         btns[0].addEventListener('click', function () { // 检验是不是数字
-            let i = checkedInput()
-            if (i) {
-                let v = document.querySelector('#num-' + i).value
-                if (Number(v)) {
-                    r.innerHTML = '是数字'
-                } else {
-                    r.innerHTML = '不是数字'
-                }
+            let v = getCheckedV()
+            if (v === -1) {
+                r.innerHTML = '不是数字'
             } else {
-                console.log('没有输入框被选中')
+                r.innerHTML = '是数字'
             }
         })
 
@@ -75,7 +75,7 @@
             }
         })
 
-        btn[2].addEventListener('click', function () {
+        btns[2].addEventListener('click', function () {
             let i = checkedInput()
             if (i) {
                 let v = document.querySelector('#num-' + i).value
@@ -85,6 +85,30 @@
                     r.innerHTML = 0 - v
                 } else {
                     r.innerHTML = 0
+                }
+            } else {
+                console.log('没有输入框被选中')
+            }
+        })
+
+        btns[3].addEventListener('click', function () {
+            let i = checkedInput()
+            if (i) {
+                let v = document.querySelector('#num-' + i).value
+                if (Number(v)) {
+                    r.innerHTML = Math.ceil(Number(v))
+                }
+            } else {
+                console.log('没有输入框被选中')
+            }
+        })
+
+        btns[4].addEventListener('click', function () {
+            let i = checkedInput()
+            if (i) {
+                let v = document.querySelector('#num-' + i).value
+                if (Number(v)) {
+                    r.innerHTML = Math.floor(Number(v))
                 }
             } else {
                 console.log('没有输入框被选中')
