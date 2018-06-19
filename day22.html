@@ -54,6 +54,7 @@
                 if (Number(v)) {
                     return Number(v)
                 } else {
+                    console.log('选中的不是数字')
                     return false
                 }
             } else {
@@ -102,6 +103,41 @@
             let v = getCheckedV()
             if (v) {
                 r.innerHTML = Math.floor(v)
+            }
+        })
+
+        btns[5].addEventListener('click', function () {
+            let v = getCheckedV()
+            if (v) {
+                r.innerHTML = Math.round(v)
+            }
+        })
+
+        btns[6].addEventListener('click', function () {
+            if (iA.value && iB.value) {
+                let v1 = Number(iA.value)
+                let v2 = Number(iB.value)
+                if (v1 > v2) {
+                    r.innerHTML = v1
+                } else {
+                    r.innerHTML = v2
+                }
+            } else {
+                console.log('需要输入两个数字')
+            }
+        })
+
+        btns[7].addEventListener('click', function () {
+            if (iA.value && iB.value) {
+                let v1 = Number(iA.value)
+                let v2 = Number(iB.value)
+                if (v1 < v2) {
+                    r.innerHTML = v1
+                } else {
+                    r.innerHTML = v2
+                }
+            } else {
+                console.log('需要输入两个数字')
             }
         })
     </script>
