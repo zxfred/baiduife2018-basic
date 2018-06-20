@@ -98,14 +98,35 @@
             }
         }
 
-        btns2[0].addEventListener('click', function () { // 检验是不是数字
+        btns2[0].addEventListener('click', function () { // 获取当前选中输入的内容长度
             let v = getCheckedV2()
             r2.innerHTML = v.length
         })
 
-        btns2[1].addEventListener('click', function () { // 检验是不是数字
+        btns2[1].addEventListener('click', function () { // 当前选中输入中的第3个字符
             let v = getCheckedV2()
-            r2.innerHTML = v.length
+            r2.innerHTML = v.charAt(2)
+        })
+
+        btns2[2].addEventListener('click', function () { // 把两个输入框的文字连接在一起输出（concat）
+            r2.innerHTML = strA2.value.concat(strB2.value)
+        })
+
+        btns2[3].addEventListener('click', function () {
+            r2.innerHTML = strA2.value.indexOf(strB2.value)
+        })
+
+        btns2[4].addEventListener('click', function () {
+            r2.innerHTML = strA2.value.lastIndexOf(strB2.value)
+        })
+
+        btns2[5].addEventListener('click', function () {
+            let v = getCheckedV2()
+            r2.innerHTML = v.slice(iA2.value, iB2.value)
+        })
+
+        btns2[6].addEventListener('click', function () {
+            console.log(strA2)
         })
 
         /* ---------- task1 ---------- */
