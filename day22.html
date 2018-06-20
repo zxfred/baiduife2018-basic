@@ -74,6 +74,48 @@
     <p id="result2"></p>
 
     <script>
+        /* ---------- task3 ---------- */
+
+        function diyTrim(str) {
+            return str.split(' ').join('').split('　').join('')
+        }
+
+        // 测试用例
+        // console.log(diyTrim(' a f b    ')); // ->a f b
+        // console.log(diyTrim('    ffdaf    ')); // ->ffdaf
+        // console.log(diyTrim('1    ')); // ->1
+        // console.log(diyTrim('　　f')); // ->f
+        // console.log(diyTrim('  　  a f b 　　 ')); // ->a f b
+        // console.log(diyTrim(' ')); // ->
+        // console.log(diyTrim('　')); // ->
+        // console.log(diyTrim('')); // ->
+
+        /*
+        去掉字符串str中，连续重复的地方
+        */
+        function removeRepetition(str) {
+            let arr = str.split('')
+            let newArr = []
+            let loop = function (arr) {
+                if (arr.length > 0) {
+                    if (arr[0] !== arr[1]) { // 如果数组第一个值与第二个值不相等
+                        newArr.push(arr[0]) // 把第一个值加入到新数组
+                    }
+                    arr.shift() // 删除数组第一个元素
+                    loop(arr) // 递归执行, 直到数组为空
+                }
+            }
+            loop(arr)
+            return newArr.join('')
+        }
+
+        // 测试用例
+        console.log(removeRepetition("aaa")); // ->a
+        console.log(removeRepetition("abbba")); // ->aba
+        console.log(removeRepetition("aabbaabb")); // ->abab
+        console.log(removeRepetition("")); // ->
+        console.log(removeRepetition("abc")); // ->abc
+
         /* ---------- task2 ---------- */
 
         let btns2 = document.querySelectorAll('.btns2 button')
@@ -81,7 +123,7 @@
         let strA2 = document.querySelector('#str-a')
         let strB2 = document.querySelector('#str-b')
         let iA2 = document.querySelector('#num-a2')
-        let iB2 = document.querySelector('#num-b2')  
+        let iB2 = document.querySelector('#num-b2')
 
         getCheckedV2 = () => { // 获取选中输入框的 value 值
             let radios = document.getElementsByName('str-obj')
