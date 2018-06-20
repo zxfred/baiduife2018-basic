@@ -112,21 +112,52 @@
             r2.innerHTML = strA2.value.concat(strB2.value)
         })
 
-        btns2[3].addEventListener('click', function () {
+        btns2[3].addEventListener('click', function () { // 输入B中的内容，在输入A的内容中第一次出现的位置（indexOf)
             r2.innerHTML = strA2.value.indexOf(strB2.value)
         })
 
-        btns2[4].addEventListener('click', function () {
+        btns2[4].addEventListener('click', function () { // 输入A中的内容，在输入B的内容中最后一次出现的位置（lastIndexOf)
             r2.innerHTML = strA2.value.lastIndexOf(strB2.value)
         })
 
-        btns2[5].addEventListener('click', function () {
+        btns2[5].addEventListener('click', function () { // 使用slice获取选中输入框内容的部分内容，参数为num-a及num-b
             let v = getCheckedV2()
             r2.innerHTML = v.slice(iA2.value, iB2.value)
         })
 
-        btns2[6].addEventListener('click', function () {
-            console.log(strA2)
+        btns2[6].addEventListener('click', function () { // 当前选中输入框的行数
+            let radios = document.getElementsByName('str-obj')
+            for (let i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    r2.innerHTML = document.querySelector('#str-' + radios[i].value).rows
+                    break
+                }
+            }
+        })
+
+        btns2[7].addEventListener('click', function () { // 使用substr获取选中输入框内容的子字符串，参数为num-a及num-b
+            let v = getCheckedV2()
+            r2.innerHTML = v.substr(iA2.value, iB2.value)
+        })
+
+        btns2[8].addEventListener('click', function () { // 把所选输入框中的内容全部转为大写
+            let v = getCheckedV2()
+            r2.innerHTML = v.toUpperCase()
+        })
+
+        btns2[9].addEventListener('click', function () { // 把所选输入框中的内容全部转为小写
+            let v = getCheckedV2()
+            r2.innerHTML = v.toLowerCase()
+        })
+
+        btns2[10].addEventListener('click', function () { // 把所选输入框中内容的半角空格全部去除
+            let v = getCheckedV2()
+            r2.innerHTML = v.split(' ').join('')
+        })
+
+        btns2[11].addEventListener('click', function () { // 把所选输入框中内容的a全部替换成另外一个输入框中的内容
+            let v = getCheckedV2()
+            r2.innerHTML = strA2.value.replace(/a/g, strB2.value) // 使用正则进行全局转换, 而不是只转换一次
         })
 
         /* ---------- task1 ---------- */
