@@ -77,11 +77,36 @@
         /* ---------- task2 ---------- */
 
         let btns2 = document.querySelectorAll('.btns2 button')
-        let r2 = document.querySelector('#result')
+        let r2 = document.querySelector('#result2')
         let strA2 = document.querySelector('#str-a')
         let strB2 = document.querySelector('#str-b')
-        let iA2 = document.querySelector('#num-a')
-        let iB2 = document.querySelector('#num-b')
+        let iA2 = document.querySelector('#num-a2')
+        let iB2 = document.querySelector('#num-b2')  
+
+        getCheckedV2 = () => { // 获取选中输入框的 value 值
+            let radios = document.getElementsByName('str-obj')
+            for (let i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    var v = document.querySelector('#str-' + radios[i].value).value
+                    break
+                }
+            }
+            if (typeof v !== 'undefined') {
+                return v
+            } else {
+                console.log('没有输入框被选中')
+            }
+        }
+
+        btns2[0].addEventListener('click', function () { // 检验是不是数字
+            let v = getCheckedV2()
+            r2.innerHTML = v.length
+        })
+
+        btns2[1].addEventListener('click', function () { // 检验是不是数字
+            let v = getCheckedV2()
+            r2.innerHTML = v.length
+        })
 
         /* ---------- task1 ---------- */
 
