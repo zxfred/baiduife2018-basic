@@ -73,7 +73,61 @@
     </div>
     <p id="result2"></p>
 
+    <!--  task5  -->
+
+    <input id="queue-input" type="text">
+    <p id="queue-cont">队列内容：apple-&gt;pear</p>    
+    <button id="in-btn">入队</button>
+    <button id="out-btn">出队</button>
+    <button id="font-btn">打印队头元素内容</button>
+    <button id="empty-btn">判断队列是否为空</button>
+
+    <!--  task6  -->
+
+
     <script>
+
+        /* ---------- task6 ---------- */
+
+        /* ---------- task5 ---------- */
+
+        var queue = ["apple", "pear"];
+        var inBtn = document.querySelector('#in-btn')
+        var outBtn = document.querySelector('#out-btn')
+        var fontBtn = document.querySelector('#font-btn')
+        var emptyBtn = document.querySelector('#empty-btn')
+        var qInput = document.getElementById('queue-input')
+
+        inBtn.addEventListener('click', function() {
+            let v = qInput.value
+            queue.unshift(v)
+            updateQ()
+        })
+
+        outBtn.addEventListener('click', function() {
+            if (queue.length > 0) {
+                queue.pop()
+                updateQ()
+            }
+        })
+
+        fontBtn.addEventListener('click', function() {
+            if (queue.length > 0) {
+                console.log(queue[0])
+            }
+        })
+
+        emptyBtn.addEventListener('click', function() {
+            if (queue.length == 0) {
+                console.log('队列为空')
+            } else {
+                console.log('队列不为空')
+            }
+        })
+
+        function updateQ() {
+            document.querySelector('#queue-cont').innerHTML = '队列内容：' + queue.join('->')
+        }
 
         /* ---------- task4 ---------- */
 
