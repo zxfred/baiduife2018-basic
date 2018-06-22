@@ -77,10 +77,6 @@
 
         /* ---------- task4 ---------- */
 
-        for(let i = 0; i < 10; i++){
-            console.log('hello')
-        }
-
         var tree = {
             "id": 0,
             "name": "root",
@@ -91,7 +87,7 @@
                     "id": 3,
                     "name": "Carl",
                     "left": {
-                        "id": 7,
+                        "id": 7, 
                         "name": "Lee",
                         "left": {
                             "id": 11,
@@ -134,66 +130,48 @@
             }
         }
 
-        function Node(data, left, right) {
-            this.data = data
-            this.left = left
-            this.right = right
-            this.show = show
-        }
-
-        function show() {
-            return this.date
-        }
-
-        function BST() {
-            this.root = null
-            this.insert = insert
-            this.inOrder = inOrder
-        }
-
-        function insert(data) {
-            var n = new Node(data, null, null)
-            if (this.root == null) {
-                this.root = n
-            } else {
-                var current = this.root
-                var parent
-                while (true) {
-                    parent = current
-                    if (data < current.data) {
-                        current = current.left
-                        if (current == null) {
-                            parent.left = n
-                            break
-                        }
-                    } else {
-                        current = current.right
-                        if (current == null) {
-                            parent.right = n
-                            break
-                        }
+        // 假设id和name均不会重复，根据输入name找到对应的id
+        function findIdByName(name) {
+            let n = name
+            let r // 结果
+            function inOrder (node) {
+                if (node.name == n) {
+                    //console.log(node.id)
+                    r = node.id
+                } else {
+                    if (node.left != undefined) {
+                        inOrder(node.left)
+                    }
+                    if (node.right != undefined) {
+                        inOrder(node.right)
                     }
                 }
             }
+            inOrder(tree)
+            return r   
         }
-
-        function inOrder() {
-            if (!(node == null)) {
-                inOrder(node.left)
-                console.log(node.show() + '')
-                inOrder(node.right)
-            }
-        }
-
-        // 假设id和name均不会重复，根据输入name找到对应的id
-        function findIdByName(name) {
-
-        }
+        console.log(findIdByName('Kai'))
 
         // 假设id和name均不会重复，根据输入id找到对应的name
         function findNameById(id) {
-
+            let i = id
+            let r // 结果
+            let inOrder = function(node) {
+                if (node.id == i) {
+                    r = node.name
+                } else {
+                    if (node.left != undefined) {
+                        inOrder(node.left)
+                    }
+                    if (node.right != undefined) {
+                        inOrder(node.right)
+                    }
+                }
+            }
+            inOrder(tree)
+            return r
         }
+        console.log(findNameById(6))
 
         // 把这个对象中所有的名字以“前序遍历”的方式全部输出到console中
         function getListWithDLR() {
@@ -209,6 +187,57 @@
         function getListWithLRD() {
 
         }
+
+        // function Node(data, left, right) {
+        //     this.data = data
+        //     this.left = left
+        //     this.right = right
+        //     this.show = show
+        // }
+
+        // function show() {
+        //     return this.date
+        // }
+
+        // function BST() {
+        //     this.root = null
+        //     this.insert = insert
+        //     this.inOrder = inOrder
+        // }
+
+        // function insert(data) {
+        //     var n = new Node(data, null, null)
+        //     if (this.root == null) {
+        //         this.root = n
+        //     } else {
+        //         var current = this.root
+        //         var parent
+        //         while (true) {
+        //             parent = current
+        //             if (data < current.data) {
+        //                 current = current.left
+        //                 if (current == null) {
+        //                     parent.left = n
+        //                     break
+        //                 }
+        //             } else {
+        //                 current = current.right
+        //                 if (current == null) {
+        //                     parent.right = n
+        //                     break
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
+
+        // function inOrder(node) {
+        //     if (!(node == null)) {
+        //         inOrder(node.left)
+        //         console.log(node.show() + '')
+        //         inOrder(node.right)
+        //     }
+        // }
 
         /* ---------- task3 ---------- */
 
