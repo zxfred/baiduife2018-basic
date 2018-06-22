@@ -150,7 +150,7 @@
             inOrder(tree)
             return r   
         }
-        console.log(findIdByName('Kai'))
+        // console.log(findIdByName('Kai'))
 
         // 假设id和name均不会重复，根据输入id找到对应的name
         function findNameById(id) {
@@ -171,22 +171,46 @@
             inOrder(tree)
             return r
         }
-        console.log(findNameById(6))
+        // console.log(findNameById(6))
 
         // 把这个对象中所有的名字以“前序遍历”的方式全部输出到console中
         function getListWithDLR() {
-
+            let inOrder = function(node) {
+                if (node != undefined) {
+                    console.log(node.name)
+                    inOrder(node.left)
+                    inOrder(node.right)
+                }
+            }
+            inOrder(tree)
         }
+        // getListWithDLR()
 
         // 把这个对象中所有的名字以“中序遍历”的方式全部输出到console中
         function getListWithLDR() {
-
+            let inOrder = function(node) {
+                if (node != undefined) {
+                    inOrder(node.left)
+                    console.log(node.name)
+                    inOrder(node.right)
+                }
+            }
+            inOrder(tree)
         }
+        // getListWithLDR()
 
         // 把这个对象中所有的名字以“后序遍历”的方式全部输出到console中
         function getListWithLRD() {
-
+            let inOrder = function(node) {
+                if (node != undefined) {
+                    inOrder(node.left)
+                    inOrder(node.right)
+                    console.log(node.name)
+                }
+            }
+            inOrder(tree)
         }
+        // getListWithLRD()
 
         // function Node(data, left, right) {
         //     this.data = data
