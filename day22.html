@@ -73,30 +73,88 @@
     </div>
     <p id="result2"></p>
 
-    <!--  task5  -->
+    <!--  task5 & task6 -->
 
     <input id="queue-input" type="text">
-    <p id="queue-cont">队列内容：apple-&gt;pear</p>    
+    <p id="queue-cont">队列内容：apple-&gt;pear</p>
     <button id="in-btn">入队</button>
     <button id="out-btn">出队</button>
     <button id="font-btn">打印队头元素内容</button>
     <button id="empty-btn">判断队列是否为空</button>
 
-    <!--  task7  -->
+    <!--  task7 & task8  -->
 
     <div>
         <input id="stack-input" type="text">
-        <p id="stack-cont">栈内容：apple-&gt;pear</p>    
+        <p id="stack-cont">栈内容：apple-&gt;pear</p>
         <button id="push-btn">进栈</button>
         <button id="pop-btn">退栈</button>
         <button id="font-btn2">打印栈顶元素内容</button>
         <button id="empty-btn2">判断栈是否为空</button>
     </div>
 
-    <!--  task8  -->
-
-
     <script>
+
+        /* ---------- task9 ---------- */
+
+        var arr1 = [43, 54, 4, -4, 84, 100, 58, 27, 140];
+        // 将上面数组分别按从大到小以及从小到大进行排序后在console中输出
+        console.log(arr1.sort(function(a, b) {
+            return b - a
+        }))
+
+        console.log(arr1.sort(function(a, b) {
+            return a - b
+        }))
+
+        var arr2 = ['apple', 'dog', 'cat', 'car', 'zoo', 'orange', 'airplane'];
+        // 将上面数组分别按字母顺序a-z及z-a进行排序，在console中输出
+        console.log(arr2.sort())
+        console.log(arr2.sort().reverse())
+
+        var arr3 = [
+            [10, 14],
+            [16, 60],
+            [7, 44],
+            [26, 35],
+            [22, 63]
+        ];
+        // 将上面的二维数组，按照每个元素中第二个数从大到小的顺序进行排序输出，输出结果应该为：
+
+        [
+            [22, 63],
+            [16, 60],
+            [7, 44],
+            [26, 35],
+            [10, 14]
+        ]
+
+        console.log(arr3.sort(function(a, b) {
+            return b[1] - a[1]
+        }))
+
+        var arr4 = [{
+            id: 1,
+            name: 'candy',
+            value: 40
+        }, {
+            id: 2,
+            name: 'Simon',
+            value: 50
+        }, {
+            id: 3,
+            name: 'Tony',
+            value: 45
+        }, {
+            id: 4,
+            name: 'Annie',
+            value: 60
+        }];
+        // 将上面数组分别按元素对象的value值从小到大进行排序后输出
+
+        console.log(arr4.sort(function(a, b) {
+            return a.value - b.value
+        }))
 
         /* ---------- task8 ---------- */
 
@@ -112,26 +170,26 @@
         var emptyBtn2 = document.querySelector('#empty-btn2')
         var sInput = document.getElementById('stack-input')
 
-        inBtn2.addEventListener('click', function() {
+        inBtn2.addEventListener('click', function () {
             let v = sInput.value
             stack.push(v)
             updateS()
         })
 
-        outBtn2.addEventListener('click', function() {
+        outBtn2.addEventListener('click', function () {
             if (stack.length > 0) {
                 stack.pop()
                 updateS()
             }
         })
 
-        fontBtn2.addEventListener('click', function() {
+        fontBtn2.addEventListener('click', function () {
             if (stack.length > 0) {
                 console.log(stack[stack.length - 1])
             }
         })
 
-        emptyBtn2.addEventListener('click', function() {
+        emptyBtn2.addEventListener('click', function () {
             if (stack.length == 0) {
                 console.log('栈为空')
             } else {
@@ -156,26 +214,26 @@
         var emptyBtn = document.querySelector('#empty-btn')
         var qInput = document.getElementById('queue-input')
 
-        inBtn.addEventListener('click', function() {
+        inBtn.addEventListener('click', function () {
             let v = qInput.value
             queue.unshift(v)
             updateQ()
         })
 
-        outBtn.addEventListener('click', function() {
+        outBtn.addEventListener('click', function () {
             if (queue.length > 0) {
                 queue.pop()
                 updateQ()
             }
         })
 
-        fontBtn.addEventListener('click', function() {
+        fontBtn.addEventListener('click', function () {
             if (queue.length > 0) {
                 console.log(queue[0])
             }
         })
 
-        emptyBtn.addEventListener('click', function() {
+        emptyBtn.addEventListener('click', function () {
             if (queue.length == 0) {
                 console.log('队列为空')
             } else {
@@ -199,7 +257,7 @@
                     "id": 3,
                     "name": "Carl",
                     "left": {
-                        "id": 7, 
+                        "id": 7,
                         "name": "Lee",
                         "left": {
                             "id": 11,
@@ -246,7 +304,7 @@
         function findIdByName(name) {
             let n = name
             let r // 结果
-            function inOrder (node) {
+            function inOrder(node) {
                 if (node.name == n) {
                     //console.log(node.id)
                     r = node.id
@@ -260,7 +318,7 @@
                 }
             }
             inOrder(tree)
-            return r   
+            return r
         }
         // console.log(findIdByName('Kai'))
 
@@ -268,7 +326,7 @@
         function findNameById(id) {
             let i = id
             let r // 结果
-            let inOrder = function(node) {
+            let inOrder = function (node) {
                 if (node.id == i) {
                     r = node.name
                 } else {
@@ -287,7 +345,7 @@
 
         // 把这个对象中所有的名字以“前序遍历”的方式全部输出到console中
         function getListWithDLR() {
-            let inOrder = function(node) {
+            let inOrder = function (node) {
                 if (node != undefined) {
                     console.log(node.name)
                     inOrder(node.left)
@@ -300,7 +358,7 @@
 
         // 把这个对象中所有的名字以“中序遍历”的方式全部输出到console中
         function getListWithLDR() {
-            let inOrder = function(node) {
+            let inOrder = function (node) {
                 if (node != undefined) {
                     inOrder(node.left)
                     console.log(node.name)
@@ -313,7 +371,7 @@
 
         // 把这个对象中所有的名字以“后序遍历”的方式全部输出到console中
         function getListWithLRD() {
-            let inOrder = function(node) {
+            let inOrder = function (node) {
                 if (node != undefined) {
                     inOrder(node.left)
                     inOrder(node.right)
