@@ -82,12 +82,70 @@
     <button id="font-btn">打印队头元素内容</button>
     <button id="empty-btn">判断队列是否为空</button>
 
-    <!--  task6  -->
+    <!--  task7  -->
+
+    <div>
+        <input id="stack-input" type="text">
+        <p id="stack-cont">栈内容：apple-&gt;pear</p>    
+        <button id="push-btn">进栈</button>
+        <button id="pop-btn">退栈</button>
+        <button id="font-btn2">打印栈顶元素内容</button>
+        <button id="empty-btn2">判断栈是否为空</button>
+    </div>
+
+    <!--  task8  -->
 
 
     <script>
 
+        /* ---------- task8 ---------- */
+
+        // 在 task7 的基础上, 把 -> 改成 <-, push 改成 unshift, pop 改成 shift, stack[0] 改为 stack.length - 1
+
+        /* ---------- task7 ---------- */
+
+        var stack = ["apple", "pear"];
+
+        var inBtn2 = document.querySelector('#push-btn')
+        var outBtn2 = document.querySelector('#pop-btn')
+        var fontBtn2 = document.querySelector('#font-btn2')
+        var emptyBtn2 = document.querySelector('#empty-btn2')
+        var sInput = document.getElementById('stack-input')
+
+        inBtn2.addEventListener('click', function() {
+            let v = sInput.value
+            stack.push(v)
+            updateS()
+        })
+
+        outBtn2.addEventListener('click', function() {
+            if (stack.length > 0) {
+                stack.pop()
+                updateS()
+            }
+        })
+
+        fontBtn2.addEventListener('click', function() {
+            if (stack.length > 0) {
+                console.log(stack[stack.length - 1])
+            }
+        })
+
+        emptyBtn2.addEventListener('click', function() {
+            if (stack.length == 0) {
+                console.log('栈为空')
+            } else {
+                console.log('栈不为空')
+            }
+        })
+
+        function updateS() {
+            document.querySelector('#stack-cont').innerHTML = '栈内容：' + stack.join('->')
+        }
+
         /* ---------- task6 ---------- */
+
+        // 在 task5 的基础上, 把 -> 改成 <-, unshift 改成 push, pop 改成 shift, queue[0] 改为 queue.length - 1
 
         /* ---------- task5 ---------- */
 
