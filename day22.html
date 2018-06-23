@@ -145,7 +145,7 @@
             [7, "Area1-2-3", 4],
             [8, "Area2-2-1", 6],
         ];
-        
+
         // 如上有一个用来存储多级菜单数据的数组， 编写一个函数， 将其转为如下的对象
         var menuObject = {
             "1": {
@@ -163,40 +163,92 @@
                         }
                     }
                 }
-            }
-        }
-
-        function n(name) {
-            return {
-                name: name,
-                subMenu: {}
+            },
+            "2": {
+                name: "Area2",
+                subMenu: {
+                    "5": {
+                        name: "Area2-1"
+                    },
+                    "6": {
+                        name: "Area2-2",
+                        subMenu: {
+                            "8": {
+                                name: "Area2-2-1"
+                            }
+                        }
+                    }
+                }
             }
         }
 
         function arr2obj(arr) {
-
             let o = {} // 结果
 
-            for(let i = 0; i < arr.length; i++){
-                arr[i].push(arr[i][1].split('Area')[1].split('-'))
+            function findNode(obj, index) {
+                for (let j in obj) {
+                    if (j == index) {
+                        return obj[j]
+                    } else {
+                        if (obj[j].subMenu != undefined) {
+                            return findNode(obj[j].subMenu, index)
+                        }
+                    }
+                }
             }
 
-            for(let i = 0; i < arr.length; i++){
-                if (arr[i][3].length == 1) {
-                    o[arr[i][0]] = new n(arr[i][1])
-                }
-                if (arr[i][3].length == 2) {
-                    o[arr[i][3][0]].subMenu[arr[i][0]] = new n(arr[i][1]) // Fxxk!!! 注意这个写法
-                }
-                if (arr[i][3].length == 3) {
-                    let a = o[arr[i][3][0]] // 一级节点
-                    let b = a.subMenu // 二级节点
-                    b[Object.keys(b)[arr[i][3][1] - 1]].subMenu[arr[i][0]] = new n(arr[i][1])
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i][2] < 0) { // 如果是第一层
+                    o[arr[i][0]] = {}
+                    o[arr[i][0]].name = arr[i][1] // 添加节点
+                } else { // 如果不是第一层
+                    let parent = findNode(o, arr[i][2]) // 找到插入的节点的父节点
+                    if (parent != undefined) {
+                        console.log(i)
+                        parent.subMenu = {}
+                        console.log(parent)
+                        // parent.subMenu[arr[i][0]] = arr[i][1]
+                        // 写不下去了, 想了一整天, 只有下面比较丑陋的写法, 没有特别优雅的代码, 暂时搁置
+                    }
+                    //inOrder()
+                    // 插入节点
                 }
             }
-            
-            return(o)
+            console.log(o)
         }
+
+        // 以下是第一个写法, 非常丑陋
+        // function arr2obj(arr) {
+
+        //     let o = {} // 结果
+
+        //     function n(name) {
+        //         return {
+        //             name: name,
+        //             subMenu: {}
+        //         }
+        //     }
+
+        //     for(let i = 0; i < arr.length; i++){
+        //         arr[i].push(arr[i][1].split('Area')[1].split('-'))
+        //     }
+
+        //     for(let i = 0; i < arr.length; i++){
+        //         if (arr[i][3].length == 1) {
+        //             o[arr[i][0]] = new n(arr[i][1])
+        //         }
+        //         if (arr[i][3].length == 2) {
+        //             o[arr[i][3][0]].subMenu[arr[i][0]] = new n(arr[i][1]) // Fxxk!!! 注意这个写法
+        //         }
+        //         if (arr[i][3].length == 3) {
+        //             let a = o[arr[i][3][0]] // 一级节点
+        //             let b = a.subMenu // 二级节点
+        //             b[Object.keys(b)[arr[i][3][1] - 1]].subMenu[arr[i][0]] = new n(arr[i][1])
+        //         }
+        //     }
+
+        //     return(o)
+        // }
 
         console.log(arr2obj(menuArr))
 
