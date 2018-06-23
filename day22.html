@@ -131,7 +131,7 @@
             }
             return r
         }
-        console.log(obj2arr(scoreObject))
+        // console.log(obj2arr(scoreObject))
 
         // 数组转为对象：
 
@@ -145,8 +145,8 @@
             [7, "Area1-2-3", 4],
             [8, "Area2-2-1", 6],
         ];
+        
         // 如上有一个用来存储多级菜单数据的数组， 编写一个函数， 将其转为如下的对象
-
         var menuObject = {
             "1": {
                 name: "Area1",
@@ -166,37 +166,56 @@
             }
         }
 
+        function n(name) {
+            return {
+                name: name,
+                subMenu: {}
+            }
+        }
+
         function arr2obj(arr) {
+
+            let o = {} // 结果
+
             for(let i = 0; i < arr.length; i++){
                 arr[i].push(arr[i][1].split('Area')[1].split('-'))
             }
-            console.log(arr)
 
-            let insertNode = function() {
-                for(let i = 0; i < arr.length; i++){
-                    
+            for(let i = 0; i < arr.length; i++){
+                if (arr[i][3].length == 1) {
+                    o[arr[i][0]] = new n(arr[i][1])
+                }
+                if (arr[i][3].length == 2) {
+                    o[arr[i][3][0]].subMenu[arr[i][0]] = new n(arr[i][1]) // Fxxk!!! 注意这个写法
+                }
+                if (arr[i][3].length == 3) {
+                    let a = o[arr[i][3][0]] // 一级节点
+                    let b = a.subMenu // 二级节点
+                    b[Object.keys(b)[arr[i][3][1] - 1]].subMenu[arr[i][0]] = new n(arr[i][1])
                 }
             }
-
+            
+            return(o)
         }
+
         console.log(arr2obj(menuArr))
 
         /* ---------- task9 ---------- */
 
         var arr1 = [43, 54, 4, -4, 84, 100, 58, 27, 140];
         // 将上面数组分别按从大到小以及从小到大进行排序后在console中输出
-        console.log(arr1.sort(function (a, b) {
-            return b - a
-        }))
+        // console.log(arr1.sort(function (a, b) {
+        //     return b - a
+        // }))
 
-        console.log(arr1.sort(function (a, b) {
-            return a - b
-        }))
+        // console.log(arr1.sort(function (a, b) {
+        //     return a - b
+        // }))
 
         var arr2 = ['apple', 'dog', 'cat', 'car', 'zoo', 'orange', 'airplane'];
         // 将上面数组分别按字母顺序a-z及z-a进行排序，在console中输出
-        console.log(arr2.sort())
-        console.log(arr2.sort().reverse())
+        //console.log(arr2.sort())
+        //console.log(arr2.sort().reverse())
 
         var arr3 = [
             [10, 14],
@@ -215,9 +234,9 @@
             [10, 14]
         ]
 
-        console.log(arr3.sort(function (a, b) {
-            return b[1] - a[1]
-        }))
+        // console.log(arr3.sort(function (a, b) {
+        //     return b[1] - a[1]
+        // }))
 
         var arr4 = [{
             id: 1,
@@ -238,9 +257,9 @@
         }];
         // 将上面数组分别按元素对象的value值从小到大进行排序后输出
 
-        console.log(arr4.sort(function (a, b) {
-            return a.value - b.value
-        }))
+        // console.log(arr4.sort(function (a, b) {
+        //     return a.value - b.value
+        // }))
 
         /* ---------- task8 ---------- */
 
@@ -555,11 +574,11 @@
         }
 
         // 测试用例
-        console.log(removeRepetition("aaa")); // ->a
-        console.log(removeRepetition("abbba")); // ->aba
-        console.log(removeRepetition("aabbaabb")); // ->abab
-        console.log(removeRepetition("")); // ->
-        console.log(removeRepetition("abc")); // ->abc
+        // console.log(removeRepetition("aaa")); // ->a
+        // console.log(removeRepetition("abbba")); // ->aba
+        // console.log(removeRepetition("aabbaabb")); // ->abab
+        // console.log(removeRepetition("")); // ->
+        // console.log(removeRepetition("abc")); // ->abc
 
         /* ---------- task2 ---------- */
 
