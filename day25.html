@@ -9,9 +9,99 @@
 </head>
 
 <body>
-
+    <p id="time"></p>
 </body>
 <script>
+    
+    start()
+
+    function start() {
+        updateTime (0)
+        setInterval(()=>{
+            updateTime (0)
+        }, 1000)
+    }
+
+    function updateTime (type) { // 0中文 1英文
+        let p = document.querySelector('#time')
+        if (type === 0) {
+            p.innerHTML = getNow()
+        } else if (type === 1) {
+            p.innerHTML = newGetNow()
+        }
+    }
+
+    function getNow () { //格式为 YYYY 年 MM 月 DD 日 星期 D HH:mm:ss
+        let d = new Date()
+        let y = d.getFullYear()
+        let m = d.getMonth() + 1
+        let date = d.getDate()
+        let day = parseDay(d.getDay(), 0)
+        let h = parseTimeWidth(d.getHours())
+        let min = parseTimeWidth(d.getMinutes())
+        let sec = parseTimeWidth(d.getSeconds())
+        return y + '年' + m + '月' + date + '日' + ' ' + day + ' ' + h + ':' + min + ':' + sec
+        // 需求变更 
+        // return y + '-' + m + '-' + date + ' ' + day + h + ':' + min + ':' + sec
+    }
+
+    function newGetNow () { // 需求变更 格式为 2008-10-10 Monday 07:10:30 PM
+        let d = new Date()
+        let y = d.getFullYear()
+        let m = d.getMonth() + 1
+        let date = d.getDate()
+        let day = parseDay(d.getDay(), 1)
+        let h = parseTimeWidth(d.getHours())
+        let min = parseTimeWidth(d.getMinutes())
+        let sec = parseTimeWidth(d.getSeconds())
+        let noon = parseNoon(d.getHours())
+        return y + '-' + m + '-' + date + ' ' + day + ' ' + h + ':' + min + ':' + sec + ' ' + noon
+    }
+
+    function parseNoon (num) {
+        if (num < 12) {
+            return 'AM'
+        } else {
+            return 'PM'
+        }
+    }
+
+    function parseDay (day, type) { // 星期转换汉字 type 0 中文, type 1 英文
+        switch (day) {
+            case 0:
+            return type == 0 ? '星期日' : 'Sunday'
+            break
+            case 1:
+            return type == 0 ? '星期一' : 'Monday'
+            break
+            case 2:
+            return type == 0 ? '星期二' : 'Tuesday'
+            break
+            case 3:
+            return type == 0 ? '星期三' : 'Wednesday'
+            break
+            case 4:
+            return type == 0 ? '星期四' : 'Thurday'
+            break
+            case 5:
+            return type == 0 ? '星期五' : 'Friday'
+            break
+            case 6:
+            return type == 0 ? '星期六' : 'Saturday'
+            break
+        }
+    }
+
+    function parseTimeWidth (num) { // 时间前加0
+        if (num >= 0 && num < 10) {
+            return '0' + num
+        } else {
+            return num
+        }
+    }
+
+    /* ---------- task10 ---------- */
+
     function Go() {
         console.log("Go");
     }
