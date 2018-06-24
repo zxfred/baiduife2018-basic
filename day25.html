@@ -9,20 +9,69 @@
 </head>
 
 <body>
+
+    <!--  task2-4 -->
+
     <p id="time"></p>
+
+    <!--  task5 -->
+
+    <select id="year-select"></select>
+    <select id="month-select"></select>
+    <select id="day-select">
+        <option value="1">1</option>
+    </select>
+    <select id="hour-select"></select>
+    <select id="minute-select"></select>
+    <select id="second-select"></select>
+
+    <p id="result-wrapper">现在距离 2001年1月1日星期X HH:MM:SS 还有 X 天 X 小时 X 分 X 秒</p>
+    
 </body>
 <script>
-    
+    /* ---------- task5 ---------- */
+
+    function insertOptionNode (parent, startnum, endnum) { // 向父节点插入一定数量的option子节点方法
+        for(let i = startnum; i <= endnum; i++){
+            let newNode = document.createElement('option')
+            newNode.setAttribute('value', i)
+            newNode.innerHTML = i
+            parent.appendChild(newNode)
+        } 
+    }
+
+    // 根据选择的月份插入相应的天数
+
+    // 插入节点
+    insertOptionNode(document.querySelector('#year-select'), 2000, 2032)
+    insertOptionNode(document.querySelector('#month-select'), 1, 12)
+    // insertOptionNode(document.querySelector('#day-select'), 1, 31)
+    insertOptionNode(document.querySelector('#hour-select'), 0, 23)
+    insertOptionNode(document.querySelector('#minute-select'), 0, 59)
+    insertOptionNode(document.querySelector('#second-select'), 0, 59)
+
+    /* 判断闰年
+     * @param year {Number} 传入年份
+     * @return {Boolean} true: 是闰年; false: 不是闰年
+     */
+    function isLeapYear (year) {
+        return year % 4 === 0 && year % 100 !== 0 || year % 400 == 0
+    }
+
+    //function count
+
+    /* ---------- task2-4 ---------- */
+
     start()
 
     function start() {
-        updateTime (0)
-        setInterval(()=>{
-            updateTime (0)
+        updateTime(0)
+        setInterval(() => {
+            updateTime(0)
         }, 1000)
     }
 
-    function updateTime (type) { // 0中文 1英文
+    function updateTime(type) { // 0中文 1英文
         let p = document.querySelector('#time')
         if (type === 0) {
             p.innerHTML = getNow()
@@ -31,7 +80,7 @@
         }
     }
 
-    function getNow () { //格式为 YYYY 年 MM 月 DD 日 星期 D HH:mm:ss
+    function getNow() { //格式为 YYYY 年 MM 月 DD 日 星期 D HH:mm:ss
         let d = new Date()
         let y = d.getFullYear()
         let m = d.getMonth() + 1
@@ -45,7 +94,7 @@
         // return y + '-' + m + '-' + date + ' ' + day + h + ':' + min + ':' + sec
     }
 
-    function newGetNow () { // 需求变更 格式为 2008-10-10 Monday 07:10:30 PM
+    function newGetNow() { // 需求变更 格式为 2008-10-10 Monday 07:10:30 PM
         let d = new Date()
         let y = d.getFullYear()
         let m = d.getMonth() + 1
@@ -58,7 +107,7 @@
         return y + '-' + m + '-' + date + ' ' + day + ' ' + h + ':' + min + ':' + sec + ' ' + noon
     }
 
-    function parseNoon (num) {
+    function parseNoon(num) {
         if (num < 12) {
             return 'AM'
         } else {
@@ -66,33 +115,33 @@
         }
     }
 
-    function parseDay (day, type) { // 星期转换汉字 type 0 中文, type 1 英文
+    function parseDay(day, type) { // 星期转换汉字 type 0 中文, type 1 英文
         switch (day) {
             case 0:
-            return type == 0 ? '星期日' : 'Sunday'
-            break
+                return type == 0 ? '星期日' : 'Sunday'
+                break
             case 1:
-            return type == 0 ? '星期一' : 'Monday'
-            break
+                return type == 0 ? '星期一' : 'Monday'
+                break
             case 2:
-            return type == 0 ? '星期二' : 'Tuesday'
-            break
+                return type == 0 ? '星期二' : 'Tuesday'
+                break
             case 3:
-            return type == 0 ? '星期三' : 'Wednesday'
-            break
+                return type == 0 ? '星期三' : 'Wednesday'
+                break
             case 4:
-            return type == 0 ? '星期四' : 'Thurday'
-            break
+                return type == 0 ? '星期四' : 'Thurday'
+                break
             case 5:
-            return type == 0 ? '星期五' : 'Friday'
-            break
+                return type == 0 ? '星期五' : 'Friday'
+                break
             case 6:
-            return type == 0 ? '星期六' : 'Saturday'
-            break
+                return type == 0 ? '星期六' : 'Saturday'
+                break
         }
     }
 
-    function parseTimeWidth (num) { // 时间前加0
+    function parseTimeWidth(num) { // 时间前加0
         if (num >= 0 && num < 10) {
             return '0' + num
         } else {
@@ -100,13 +149,13 @@
         }
     }
 
-    /* ---------- task10 ---------- */
+    /* ---------- task1 ---------- */
 
     function Go() {
         console.log("Go");
     }
 
-    function isNumber (o) { //是否数字
+    function isNumber(o) { //是否数字
         return Object.prototype.toString.call(o).slice(8, -1) === 'Number'
     }
 
@@ -114,7 +163,7 @@
         if (isNumber(n)) { // n是数字
             n = Math.floor(n)
             if (n > 0) {
-                while(n--) {
+                while (n--) {
                     Go()
                 }
             }
