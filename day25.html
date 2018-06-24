@@ -13,6 +13,7 @@
     <!--  task2-4 -->
 
     <p id="time"></p>
+    <p id="time2"></p>
 
     <!--  task5 -->
 
@@ -47,52 +48,68 @@
         insertOptionNode(minSelect, 0, 59)
         insertOptionNode(secSelect, 0, 59)
 
-        function updateHTML(parsedPeriod) {
-            let result = document.querySelector('#result-wrapper')
-            let selectedTime = new Date(yearSelect.value, monthSelect.value - 1, dateSelect.value, hourSelect.value, minSelect.value, secSelect.value).getDay() // 获取所选的日期是星期几
+        // 更新结果到HTML
+        function updateHTML() {
+            let result = document.querySelector('#result-wrapper') // 获取结果节点
+            let selectedTime = new Date(yearSelect.value, monthSelect.value - 1, dateSelect.value, hourSelect.value,
+                minSelect.value, secSelect.value) // 获取所选的日期
+
+            let parsedPeriod = calculateTime(selectedTime)[0] // 计算相差时间
+            let order = calculateTime(selectedTime)[1] // 返回所选时间是在当前时间之前还是之后
+
+            // 合并字符串
             let strA = '现在距离 ' + yearSelect.value + '年' + monthSelect.value + '月' + dateSelect.value + '日' +
-                parseDay(selectedTime, 0) + ' ' + parseTimeWidth(hourSelect.value) + ':' + parseTimeWidth(minSelect.value) + ':' + parseTimeWidth(secSelect.value) + ' '
-            let strB = '还有 '+ parsedPeriod[0] +' 天 '+ parsedPeriod[1] +' 小时 '+ parsedPeriod[2] +' 分 '+ parsedPeriod[3] +' 秒'
-            result.innerHTML = strA + strB
+                parseDay(selectedTime.getDay(), 0) + ' ' + parseTimeWidth(hourSelect.value) + ':' + parseTimeWidth(minSelect
+                    .value) + ':' + parseTimeWidth(secSelect.value) + ' '
+            let strB = (order ? '还有 ' : '已经过去 ') + parsedPeriod[0] + ' 天 ' + parsedPeriod[1] + ' 小时 ' + parsedPeriod[2] + ' 分 ' + parsedPeriod[3] + ' 秒'
+
+            result.innerHTML = strA + strB // 输出结果
         }
 
-        function calculateTime() {
-            let selectedTime = new Date(yearSelect.value, monthSelect.value - 1, dateSelect.value, hourSelect.value, minSelect.value, secSelect.value)
-            let interval = setInterval(() => {
-                let now = new Date()
-                let d
-                if (now < selectedTime) {
-                    d = selectedTime - now
-                } else {
-                    d = now - selectedTime
-                }
-                let result = parsePeriod(d)
-                console.log(result)
-                updateHTML(result)
-            }, 1000)
-        }
-        calculateTime()
+        // 加载时即执行计时并更新HTML
+        updateHTML()
+        setInterval(() => {
+            updateHTML()
+        }, 1000)
 
-        function parsePeriod(time) { // 输入一段时间(毫秒数), 格式化时间, 返回天\小时\分钟\秒
-            let dDay = Math.floor(time / (24*3600*1000))
+        // 计算时间差
+        function calculateTime(time) {
+            let now = new Date() // 现在的时间
+            let d // 两段时间的差值
+            let order // 所选时间是在当前时间之后(未来)吗
+            if (now < time) {
+                d = time - now
+                order = true // 
+            } else {
+                d = now - time
+                order = false
+            }
+            return [parsePeriod(d), order]
+        }
+
+        // 输入一段时间(毫秒数), 格式化时间, 返回天\小时\分钟\秒
+        function parsePeriod(time) {
+            let dDay = Math.floor(time / (24 * 3600 * 1000))
             // 计算出小时数  
-            let leave1 = time % (24*3600*1000) // 计算天数后剩余的毫秒数  
-            let dHour = Math.floor(leave1 / (3600*1000))
+            let remain1 = time % (24 * 3600 * 1000) // 计算天数后剩余的毫秒数  
+            let dHour = Math.floor(remain1 / (3600 * 1000))
             // 计算相差分钟数  
-            let leave2 = leave1 % (3600 * 1000); // 计算小时数后剩余的毫秒数  
-            let dMin = Math.floor(leave2 / (60*1000))
+            let remain2 = remain1 % (3600 * 1000); // 计算小时数后剩余的毫秒数  
+            let dMin = Math.floor(remain2 / (60 * 1000))
             // 计算相差秒数
-            let leave3 = leave2 % (60 * 1000); // 计算小时数后剩余的毫秒数  
-            let dSec = Math.floor(leave3 / (1000))
+            let remain3 = remain2 % (60 * 1000); // 计算小时数后剩余的毫秒数  
+            let dSec = Math.floor(remain3 / (1000))
             return [dDay, dHour, dMin, dSec]
         }
 
+        // 重置日期选项
         function resetDate() {
             dateSelect.innerHTML = ''
             insertOptionNode(dateSelect, 1, setDateNum(yearSelect.value, monthSelect.value))
         }
 
-        function insertOptionNode(parent, startnum, endnum) { // 向父节点插入一定数量的option子节点方法
+        // 向父节点插入一定数量的option子节点方法
+        function insertOptionNode(parent, startnum, endnum) {
             for (let i = startnum; i <= endnum; i++) {
                 let newNode = document.createElement('option')
                 newNode.setAttribute('value', i)
@@ -101,8 +118,9 @@
             }
         }
 
-        /* 判断闰年
-         * @param year {Number} 传入年份
+        /**
+         * 判断是否是闰年
+         * @param {Number} 年份
          * @return {Boolean} true: 是闰年; false: 不是闰年
          */
         function isLeapYear(year) {
@@ -143,33 +161,31 @@
 
         // 创建数组
         let selectArr = [yearSelect, monthSelect, dateSelect, hourSelect, minSelect, secSelect]
-        for (let i = 0; i < selectArr.length; i++) { // 绑定点击事件
+        for (let i = 0; i < selectArr.length; i++) { // 绑定点击选项事件
             selectArr[i].addEventListener('change', function () {
                 if (i === 1 || i === 0) { // 如果改变年或月选项, 重置日选项
                     resetDate()
                 }
-                updateHTML()
+                updateHTML() // 直接更新HTML
             })
         }
-        updateHTML()
+
     })();
 
     /* ---------- task2-4 ---------- */
 
     (function start() {
-        updateTime(0)
+        updateTime()
         setInterval(() => {
-            updateTime(0)
+            updateTime()
         }, 1000)
     })();
 
-    function updateTime(type) { // 0中文 1英文
+    function updateTime() {
         let p = document.querySelector('#time')
-        if (type === 0) {
-            p.innerHTML = getNow()
-        } else if (type === 1) {
-            p.innerHTML = newGetNow()
-        }
+        let p2 = document.querySelector('#time2')
+        p.innerHTML = getNow()
+        p2.innerHTML = newGetNow()
     }
 
     function getNow() { //格式为 YYYY 年 MM 月 DD 日 星期 D HH:mm:ss
