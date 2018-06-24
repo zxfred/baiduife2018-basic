@@ -18,58 +18,150 @@
 
     <select id="year-select"></select>
     <select id="month-select"></select>
-    <select id="day-select">
-        <option value="1">1</option>
-    </select>
+    <select id="date-select"></select>
     <select id="hour-select"></select>
     <select id="minute-select"></select>
     <select id="second-select"></select>
 
     <p id="result-wrapper">现在距离 2001年1月1日星期X HH:MM:SS 还有 X 天 X 小时 X 分 X 秒</p>
-    
+
 </body>
 <script>
     /* ---------- task5 ---------- */
 
-    function insertOptionNode (parent, startnum, endnum) { // 向父节点插入一定数量的option子节点方法
-        for(let i = startnum; i <= endnum; i++){
-            let newNode = document.createElement('option')
-            newNode.setAttribute('value', i)
-            newNode.innerHTML = i
-            parent.appendChild(newNode)
-        } 
-    }
+    (function init() {
 
-    // 根据选择的月份插入相应的天数
+        // 获取选项
+        let yearSelect = document.querySelector('#year-select')
+        let monthSelect = document.querySelector('#month-select')
+        let dateSelect = document.querySelector('#date-select')
+        let hourSelect = document.querySelector('#hour-select')
+        let minSelect = document.querySelector('#minute-select')
+        let secSelect = document.querySelector('#second-select')
 
-    // 插入节点
-    insertOptionNode(document.querySelector('#year-select'), 2000, 2032)
-    insertOptionNode(document.querySelector('#month-select'), 1, 12)
-    // insertOptionNode(document.querySelector('#day-select'), 1, 31)
-    insertOptionNode(document.querySelector('#hour-select'), 0, 23)
-    insertOptionNode(document.querySelector('#minute-select'), 0, 59)
-    insertOptionNode(document.querySelector('#second-select'), 0, 59)
+        // 插入相应数量的option
+        insertOptionNode(yearSelect, 2000, 2032)
+        insertOptionNode(monthSelect, 1, 12)
+        insertOptionNode(dateSelect, 1, setDateNum(yearSelect.value, monthSelect.value))
+        insertOptionNode(hourSelect, 0, 23)
+        insertOptionNode(minSelect, 0, 59)
+        insertOptionNode(secSelect, 0, 59)
 
-    /* 判断闰年
-     * @param year {Number} 传入年份
-     * @return {Boolean} true: 是闰年; false: 不是闰年
-     */
-    function isLeapYear (year) {
-        return year % 4 === 0 && year % 100 !== 0 || year % 400 == 0
-    }
+        function updateHTML(parsedPeriod) {
+            let result = document.querySelector('#result-wrapper')
+            let selectedTime = new Date(yearSelect.value, monthSelect.value - 1, dateSelect.value, hourSelect.value, minSelect.value, secSelect.value).getDay() // 获取所选的日期是星期几
+            let strA = '现在距离 ' + yearSelect.value + '年' + monthSelect.value + '月' + dateSelect.value + '日' +
+                parseDay(selectedTime, 0) + ' ' + parseTimeWidth(hourSelect.value) + ':' + parseTimeWidth(minSelect.value) + ':' + parseTimeWidth(secSelect.value) + ' '
+            let strB = '还有 '+ parsedPeriod[0] +' 天 '+ parsedPeriod[1] +' 小时 '+ parsedPeriod[2] +' 分 '+ parsedPeriod[3] +' 秒'
+            result.innerHTML = strA + strB
+        }
 
-    //function count
+        function calculateTime() {
+            let selectedTime = new Date(yearSelect.value, monthSelect.value - 1, dateSelect.value, hourSelect.value, minSelect.value, secSelect.value)
+            let interval = setInterval(() => {
+                let now = new Date()
+                let d
+                if (now < selectedTime) {
+                    d = selectedTime - now
+                } else {
+                    d = now - selectedTime
+                }
+                let result = parsePeriod(d)
+                console.log(result)
+                updateHTML(result)
+            }, 1000)
+        }
+        calculateTime()
+
+        function parsePeriod(time) { // 输入一段时间(毫秒数), 格式化时间, 返回天\小时\分钟\秒
+            let dDay = Math.floor(time / (24*3600*1000))
+            // 计算出小时数  
+            let leave1 = time % (24*3600*1000) // 计算天数后剩余的毫秒数  
+            let dHour = Math.floor(leave1 / (3600*1000))
+            // 计算相差分钟数  
+            let leave2 = leave1 % (3600 * 1000); // 计算小时数后剩余的毫秒数  
+            let dMin = Math.floor(leave2 / (60*1000))
+            // 计算相差秒数
+            let leave3 = leave2 % (60 * 1000); // 计算小时数后剩余的毫秒数  
+            let dSec = Math.floor(leave3 / (1000))
+            return [dDay, dHour, dMin, dSec]
+        }
+
+        function resetDate() {
+            dateSelect.innerHTML = ''
+            insertOptionNode(dateSelect, 1, setDateNum(yearSelect.value, monthSelect.value))
+        }
+
+        function insertOptionNode(parent, startnum, endnum) { // 向父节点插入一定数量的option子节点方法
+            for (let i = startnum; i <= endnum; i++) {
+                let newNode = document.createElement('option')
+                newNode.setAttribute('value', i)
+                newNode.innerHTML = i
+                parent.appendChild(newNode)
+            }
+        }
+
+        /* 判断闰年
+         * @param year {Number} 传入年份
+         * @return {Boolean} true: 是闰年; false: 不是闰年
+         */
+        function isLeapYear(year) {
+            return year % 4 === 0 && year % 100 !== 0 || year % 400 == 0
+        }
+
+        // 根据可选的月份设置日
+        function setDateNum(y, m) {
+            let date
+            let year = parseInt(y)
+            let month = parseInt(m)
+            switch (month) {
+                case 1:
+                case 3:
+                case 5:
+                case 7:
+                case 8:
+                case 10:
+                case 12: // 31天的月
+                    date = 31
+                    break
+                case 2:
+                    if (isLeapYear(year)) { // 2月
+                        date = 29
+                    } else {
+                        date = 28
+                    }
+                    break
+                case 4:
+                case 6:
+                case 9:
+                case 11: // 30天的月
+                    date = 30
+                    break
+            }
+            return date
+        }
+
+        // 创建数组
+        let selectArr = [yearSelect, monthSelect, dateSelect, hourSelect, minSelect, secSelect]
+        for (let i = 0; i < selectArr.length; i++) { // 绑定点击事件
+            selectArr[i].addEventListener('change', function () {
+                if (i === 1 || i === 0) { // 如果改变年或月选项, 重置日选项
+                    resetDate()
+                }
+                updateHTML()
+            })
+        }
+        updateHTML()
+    })();
 
     /* ---------- task2-4 ---------- */
 
-    start()
-
-    function start() {
+    (function start() {
         updateTime(0)
         setInterval(() => {
             updateTime(0)
         }, 1000)
-    }
+    })();
 
     function updateTime(type) { // 0中文 1英文
         let p = document.querySelector('#time')
