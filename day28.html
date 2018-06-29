@@ -23,7 +23,7 @@
             let sug = document.getElementById('email-sug-wrapper')
             emailInput.onchange = function () {
                 if (emailInput.value != '') {
-                    //sug.class
+                    //sug.style.
                 } else {
 
                 }
@@ -33,6 +33,8 @@
 
             function 获取用户输入() {
                 拿到input输入框的输入内容trim后返回
+                let v = emailInput.value
+                v = v.split(' ').join('').split('　').join('')
             }
 
             function 生成提示框中的提示内容() {
