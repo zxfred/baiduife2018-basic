@@ -9,35 +9,51 @@
     <link href="https://lib.baomitu.com/normalize/8.0.0/normalize.min.css" rel="stylesheet">
     <style>
 
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             padding: 20px;
         }
 
         .wrapper {
             width: 200px;
-            height: 25px;
-            position: relative; 
+            height: 38px;
+            position: relative;
         }
 
         #email-input {
             width: 100%;
             height: 100%;
+            padding-left: 10px;
+            font-size: 13px;
         }
 
         #email-sug-wrapper {
             padding: 0;
             margin: 0;
-            display: block;
             width: 100%;
-            height: 100%;
-            position: absolute;
             top: 100%;
             list-style: none;
+            border: solid 1px #d9d9d9;
+            border-top: none;
+            position: absolute;
         }
 
         #email-sug-wrapper li{
             display: block;
             width: 100%;
+            height: 28px;
+            padding-left: 10px;
+            font-size: 13px;
+            line-height: 28px;
+            color: #c1c1c1;
+        }
+
+        #email-sug-wrapper li:hover{
+            background-color: #fdc5cf;
+            color: #fff;
         }
 
     </style>
