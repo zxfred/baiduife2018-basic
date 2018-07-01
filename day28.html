@@ -28,9 +28,11 @@
             height: 100%;
             padding-left: 10px;
             font-size: 13px;
+            outline: none;
         }
 
         #email-sug-wrapper {
+            display: none;
             padding: 0;
             margin: 0;
             width: 100%;
@@ -54,6 +56,10 @@
         #email-sug-wrapper li:hover{
             background-color: #fdc5cf;
             color: #fff;
+        }
+
+        #email-input:focus ~ #email-sug-wrapper {
+            display: block;
         }
 
     </style>
