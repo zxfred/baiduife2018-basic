@@ -108,8 +108,10 @@
                 // 获取生成提示框中的提示内容, 将内容添加到email - sug - wrapper中
                 let content = generateHints()
                 sug.innerHTML = ''
-                for(let i = 0; i < content.length; i++){
-                    sug.appendChild(content[i])
+                if (content.length > 0) {
+                    for(let i = 0; i < content.length; i++){
+                        sug.appendChild(content[i])
+                    }
                 }
             }
 
@@ -134,25 +136,31 @@
                 let v = getInputValue()
                 let list = postfixList
                 let content = []
-
                 if (v.indexOf('@') !== -1) {
                     let index = v.indexOf('@') // 获取索引
                     let preStr = v.slice(0, index) // 用来拼接的内容
-                    let sufStr = v.slice(index, v.length) // 用来前缀匹配的内容
-
+                    let sufStr = v.slice(index + 1, v.length) // 用来前缀匹配的内容
                     for(let i = 0; i < list.length; i++){
                         let li = document.createElement('li')
                         if (list[i].indexOf(sufStr) !== -1) {
-                            li.innerHTML = pre + list[i]
+                            li.innerHTML = preStr.concat('@', list[i])
+                            content.push(li)
                         }
-                        content[i] = li
+                    }
+                    if (content.length === 0) {
+                        for(let i = 0; i < list.length; i++){
+                            let v = getInputValue()
+                            let li = document.createElement('li')
+                            li.innerHTML = preStr + '@' + list[i]
+                            content.push(li)
+                        }
                     }
                 } else {
                     for(let i = 0; i < list.length; i++){
                         let v = getInputValue()
                         let li = document.createElement('li')
                         li.innerHTML = v + '@' + list[i]
-                        content[i] = li
+                        content.push(li)
                     }
                 }
                 return content
