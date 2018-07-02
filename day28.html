@@ -58,9 +58,9 @@
             color: #fff;
         }
 
-        #email-input:focus ~ #email-sug-wrapper {
+        /* #email-input:focus ~ #email-sug-wrapper {
             display: block;
-        }
+        } */
 
     </style>
 </head>
@@ -68,13 +68,7 @@
 <body>
     <div class="wrapper">
         <input id="email-input" type="text">
-        <ul id="email-sug-wrapper" class="email-sug">
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
-        </ul>
+        <ul id="email-sug-wrapper" class="email-sug"></ul>
     </div>
 
     <script>
@@ -84,19 +78,13 @@
         (function () {
             let emailInput = document.getElementById('email-input')
             let sug = document.getElementById('email-sug-wrapper')
-            emailInput.onchange = function () {
-                if (emailInput.value != '') {
-                    //sug.style.
-                } else {
 
-                }
-
+            emailInput.addEventListener('input', function () {
                 updateSug()
-                // 获取用户输入， 生成提示框中的提示内容， 将提示内容添加到email - sug - wrapper中
-                // 控制email - sug - wrapper的显示 / 隐藏状态
-            }
+                showSugOrNot()
+            })
 
-            function 获取用户输入() {
+            function getInputValue() {
                 // 拿到input输入框的输入内容trim后返回
                 let v = emailInput.value
                 v = v.trim()
@@ -106,11 +94,12 @@
             function generateHints() {
                 // 遍历postfixList, 把用户输入和每一个postfix进行结合成为每一个Li, 返回生成的提示内容
                 let list = postfixList
-                let content = ''
+                let content = []
                 for(let i = 0; i < list.length; i++){
+                    let v = getInputValue()
                     let li = document.createElement('li')
-                    li.innerHTML = postfixList[i]
-                    content = content + li
+                    li.innerHTML = v + '@' + list[i]
+                    content[i] = li
                 }
                 return content
             }
@@ -118,14 +107,16 @@
             function updateSug() {
                 // 获取生成提示框中的提示内容, 将内容添加到email - sug - wrapper中
                 let content = generateHints()
-                
+                sug.innerHTML = ''
+                for(let i = 0; i < content.length; i++){
+                    sug.appendChild(content[i])
+                }
             }
 
             function showSugOrNot() {
-                if 用户输入为空 {
-                    // if () {
-                    //     hideSug()
-                    // }
+                let v = getInputValue()
+                if (v === '') {
+                    hideSug()
                 } else {
                     showSug()
                 }
