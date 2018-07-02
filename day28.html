@@ -91,18 +91,18 @@
                 return v
             }
 
-            function generateHints() {
-                // 遍历postfixList, 把用户输入和每一个postfix进行结合成为每一个Li, 返回生成的提示内容
-                let list = postfixList
-                let content = []
-                for(let i = 0; i < list.length; i++){
-                    let v = getInputValue()
-                    let li = document.createElement('li')
-                    li.innerHTML = v + '@' + list[i]
-                    content[i] = li
-                }
-                return content
-            }
+            // function generateHints() {
+            //     // 遍历postfixList, 把用户输入和每一个postfix进行结合成为每一个Li, 返回生成的提示内容
+            //     let list = postfixList
+            //     let content = []
+            //     for(let i = 0; i < list.length; i++){
+            //         let v = getInputValue()
+            //         let li = document.createElement('li')
+            //         li.innerHTML = v + '@' + list[i]
+            //         content[i] = li
+            //     }
+            //     return content
+            // }
 
             function updateSug() {
                 // 获取生成提示框中的提示内容, 将内容添加到email - sug - wrapper中
@@ -129,6 +129,35 @@
             function showSug() {
                 sug.style.display = 'block'                
             }
+
+            function generateHints() {
+                let v = getInputValue()
+                let list = postfixList
+                let content = []
+
+                if (v.indexOf('@') !== -1) {
+                    let index = v.indexOf('@') // 获取索引
+                    let preStr = v.slice(0, index) // 用来拼接的内容
+                    let sufStr = v.slice(index, v.length) // 用来前缀匹配的内容
+
+                    for(let i = 0; i < list.length; i++){
+                        let li = document.createElement('li')
+                        if (list[i].indexOf(sufStr) !== -1) {
+                            li.innerHTML = pre + list[i]
+                        }
+                        content[i] = li
+                    }
+                } else {
+                    for(let i = 0; i < list.length; i++){
+                        let v = getInputValue()
+                        let li = document.createElement('li')
+                        li.innerHTML = v + '@' + list[i]
+                        content[i] = li
+                    }
+                }
+                return content
+            }
+
         })();
     </script>
 </body>
