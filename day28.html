@@ -97,13 +97,18 @@
             }
 
             function 获取用户输入() {
-                拿到input输入框的输入内容trim后返回
+                //拿到input输入框的输入内容trim后返回
                 let v = emailInput.value
-                v = v.split(' ').join('').split('　').join('')
+                v = v.trim()
+                return v
             }
 
             function 生成提示框中的提示内容() {
-                let v = email.value
+                let list = postfixList
+                for(let i = 0; i < list.length; i++){
+                    let li = document.createElement('li')
+                    li.innerHTML = postfixList[i]
+                }
                 遍历postfixList {
                     把用户输入和每一个postfix进行结合成为每一个Li
                 }
