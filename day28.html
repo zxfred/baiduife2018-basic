@@ -102,6 +102,19 @@
                 return v
             }
 
+            function addclickEvent() {
+                // 遍历子元素并绑定点击事件
+                let lis = sug.getElementsByTagName('li')
+                if (lis) {
+                    for(let i = 0; i < lis.length; i++){
+                        lis[i].addEventListener('click', () => {
+                            emailInput.value = lis[i].innerHTML
+                            hideSug()
+                        }) 
+                    }
+                }
+            }
+
             // function generateHints() {
             //     // 遍历postfixList, 把用户输入和每一个postfix进行结合成为每一个Li, 返回生成的提示内容
             //     let list = postfixList
@@ -124,6 +137,7 @@
                         sug.appendChild(content[i])
                     }
                 }
+                addclickEvent()
             }
 
             function showSugOrNot() {
@@ -144,6 +158,7 @@
             }
 
             function generateHints() {
+                // 生成 li 子元素
                 let v = getInputValue()
                 let list = postfixList
                 let content = []
@@ -160,7 +175,6 @@
                     }
                     if (content.length === 0) {
                         for(let i = 0; i < list.length; i++){
-                            let v = getInputValue()
                             let li = document.createElement('li')
                             li.innerHTML = preStr + '@' + list[i]
                             content.push(li)
@@ -168,7 +182,6 @@
                     }
                 } else {
                     for(let i = 0; i < list.length; i++){
-                        let v = getInputValue()
                         let li = document.createElement('li')
                         li.innerHTML = v + '@' + list[i]
                         content.push(li)
