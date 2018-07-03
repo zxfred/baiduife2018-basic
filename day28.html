@@ -58,9 +58,10 @@
             color: #fff;
         }
 
-        /* #email-input:focus ~ #email-sug-wrapper {
-            display: block;
-        } */
+        #email-sug-wrapper li.selected{
+            background-color: #b8d9ea;
+            color: #fff;
+        }
 
     </style>
 </head>
@@ -82,7 +83,55 @@
             emailInput.addEventListener('input', function () {
                 updateSug()
                 showSugOrNot()
+                resetSelectStatus()
             })
+
+            // 需要修改一下之前的inputDom的输入监听
+            // inputDom的输入监听 = function() {
+            //     // 新增
+            //     如果按键不是上下及回车重置选中状态()
+
+            //     获取用户输入，生成提示框中的提示内容，将提示内容添加到email-sug-wrapper中
+            //     控制email-sug-wrapper的显示/隐藏状态    
+            // }
+
+            function resetSelectStatus() {
+                let lis = sug.querySelectorAll('li')
+                for(let i = 0; i < lis.length; i++){ // 遍历所有子元素
+                    if (lis[i].className.indexOf('selected') != -1) {
+                        if (i != 0) {  // 如果当前选中状态Li不是第一个
+                            lis[i].className = '' // 清除掉它的选中状态
+                            lis[0].className = 'selected' // 设置第一个Li为选中状态
+                        }
+                        break
+                    }
+                }
+            }
+
+            // 监听特殊3个键的键盘事件，这个事件可能就是inputDom的输入监听，也有可能是另外一个，请自己测试后判断
+            // 监听特殊3个键的键盘事件 = function() {
+            //     找到当前为选中状态的Li
+            //     清除掉它的选中状态
+            //     if 按的是上键 {
+            //         if 找到的Li不是第一个 {
+            //             将它的前一个Li设为选中
+            //         } else {
+            //             将最后一个Li设为选中
+            //         }
+            //     }
+            //     if 按的是下键 {
+            //         if 找到的Li不是最后一个 {
+            //             将它的下一个Li设为选中
+            //         } else {
+            //             将第一个Li设为选中
+            //         }
+            //     }
+
+            //     if 按的是回车 {
+            //         将找到的Li的HTML内容解码后填到input中
+            //         隐藏提示框
+            //     }
+            // }
 
             emailInput.addEventListener('focus', function () {
                 document.addEventListener('keydown', listenKey) // 这里如果是 keypress 事件, 捕获不到 Esc 这个键, 故改为 keydown 事件
@@ -109,20 +158,6 @@
                     hideSug()
                 }
             }, false);
-
-
-            // function generateHints() {
-            //     // 遍历postfixList, 把用户输入和每一个postfix进行结合成为每一个Li, 返回生成的提示内容
-            //     let list = postfixList
-            //     let content = []
-            //     for(let i = 0; i < list.length; i++){
-            //         let v = getInputValue()
-            //         let li = document.createElement('li')
-            //         li.innerHTML = v + '@' + list[i]
-            //         content[i] = li
-            //     }
-            //     return content
-            // }
 
             function updateSug() {
                 // 获取生成提示框中的提示内容, 将内容添加到email - sug - wrapper中
