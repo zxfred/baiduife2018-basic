@@ -102,18 +102,14 @@
                 return v
             }
 
-            function addclickEvent() {
-                // 遍历子元素并绑定点击事件
-                let lis = sug.getElementsByTagName('li')
-                if (lis) {
-                    for(let i = 0; i < lis.length; i++){
-                        lis[i].addEventListener('click', () => {
-                            emailInput.value = lis[i].innerHTML
-                            hideSug()
-                        }) 
-                    }
+            // 事件冒泡, 点击把内容放在输入框中
+            sug.addEventListener('click',function(e){
+                if(e.target && e.target.nodeName.toUpperCase() == 'LI'){ // 判断目标事件是否为li
+                    emailInput.value = e.target.innerHTML
+                    hideSug()
                 }
-            }
+            }, false);
+
 
             // function generateHints() {
             //     // 遍历postfixList, 把用户输入和每一个postfix进行结合成为每一个Li, 返回生成的提示内容
@@ -137,7 +133,6 @@
                         sug.appendChild(content[i])
                     }
                 }
-                addclickEvent()
             }
 
             function showSugOrNot() {
