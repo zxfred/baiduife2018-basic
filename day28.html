@@ -80,10 +80,30 @@
             let emailInput = document.getElementById('email-input')
             let sug = document.getElementById('email-sug-wrapper')
 
-            emailInput.addEventListener('input', function () {
+            emailInput.addEventListener('input', (e) => {
+
+                document.addEventListener('keydown', listenKey) 
+
+                function listenKey(e) {
+                    console.log(e)
+                    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp' && e.key !== 'Enter') {
+
+                    }
+                    document.removeEventListener('keyup', listenKey)
+                }
+
                 updateSug()
                 showSugOrNot()
                 resetSelectStatus()
+            }) 
+
+            // 按 esc 关闭提示框
+            emailInput.addEventListener('focus', function () {
+                document.addEventListener('keydown', (e) => { // 按键信息对象e以函数参数的形式传递
+                    if (e.key === 'Escape') {
+                        hideSug()
+                    }
+                }) // 这里如果是 keypress 事件, 捕获不到 Esc 这个键, 故改为 keydown 事件
             })
 
             // 需要修改一下之前的inputDom的输入监听
@@ -132,17 +152,6 @@
             //         隐藏提示框
             //     }
             // }
-
-            emailInput.addEventListener('focus', function () {
-                document.addEventListener('keydown', listenKey) // 这里如果是 keypress 事件, 捕获不到 Esc 这个键, 故改为 keydown 事件
-            })
-
-            function listenKey(e) {//按键信息对象e以函数参数的形式传递
-                // 按 ESC 关闭提示
-                if (e.key === 'Escape') {
-                    hideSug()
-                }
-            }
 
             function getInputValue() {
                 // 拿到input输入框的输入内容trim后返回
