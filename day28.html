@@ -100,10 +100,10 @@
             // 按 esc 关闭提示框
             emailInput.addEventListener('focus', function () {
                 document.addEventListener('keydown', (e) => { // 按键信息对象e以函数参数的形式传递
-                    if (e.key === 'Escape') {
+                    if (e.key === 'Escape') { // 这里如果是 keypress 事件, 捕获不到 Esc 这个键, 故改为 keydown 事件
                         hideSug()
                     }
-                }) // 这里如果是 keypress 事件, 捕获不到 Esc 这个键, 故改为 keydown 事件
+                })
             })
 
             // 需要修改一下之前的inputDom的输入监听
