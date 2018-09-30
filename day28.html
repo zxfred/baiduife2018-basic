@@ -81,11 +81,10 @@
             let sug = document.getElementById('email-sug-wrapper')
 
             emailInput.addEventListener('input', (e) => {
-
+                console.log(e)
                 document.addEventListener('keydown', listenKey) 
 
                 function listenKey(e) {
-                    console.log(e)
                     if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp' && e.key !== 'Enter') {
 
                     }
@@ -201,25 +200,27 @@
                 let v = getInputValue()
                 let list = postfixList
                 let content = []
-                if (v.indexOf('@') !== -1) {
+                if (v.indexOf('@') !== -1) { // 如果用户已经输入@
                     let index = v.indexOf('@') // 获取索引
                     let preStr = v.slice(0, index) // 用来拼接的内容
                     let sufStr = v.slice(index + 1, v.length) // 用来前缀匹配的内容
+
                     for(let i = 0; i < list.length; i++){
                         let li = document.createElement('li')
-                        if (list[i].indexOf(sufStr) !== -1) {
+                        if (list[i].indexOf(sufStr) !== -1) { // 匹配前缀, 才显示提示
                             li.innerHTML = preStr.concat('@', list[i])
                             content.push(li)
                         }
                     }
-                    if (content.length === 0) {
+
+                    if (content.length === 0) { // 当用户输入不满足任何前缀匹配时，则显示全部提示
                         for(let i = 0; i < list.length; i++){
                             let li = document.createElement('li')
                             li.innerHTML = preStr + '@' + list[i]
                             content.push(li)
                         }
                     }
-                } else {
+                } else { // 如果用户没有输入@，则显示全部提示
                     for(let i = 0; i < list.length; i++){
                         let li = document.createElement('li')
                         li.innerHTML = v + '@' + list[i]
@@ -230,7 +231,7 @@
             }
 
             let HtmlUtil = {
-                /*1.用浏览器内部转换器实现html转码*/
+                /* 1.用浏览器内部转换器实现html转码 */
                 htmlEncode: function (html){
                     //1.首先动态创建一个容器标签元素，如DIV
                     var temp = document.createElement ("div");
@@ -241,7 +242,7 @@
                     temp = null;
                     return output;
                 },
-                /*2.用浏览器内部转换器实现html解码*/
+                /* 2.用浏览器内部转换器实现html解码 */
                 htmlDecode: function (text){
                     //1.首先动态创建一个容器标签元素，如DIV
                     var temp = document.createElement("div");
@@ -252,7 +253,7 @@
                     temp = null;
                     return output;
                 },
-                /*3.用正则表达式实现html转码*/
+                /* 3.用正则表达式实现html转码 */
                 htmlEncodeByRegExp: function (str){ 
                     var s = "";
                     if(str.length == 0) return "";
@@ -264,7 +265,7 @@
                     s = s.replace(/\"/g,'"');
                     return s; 
                 },
-                /*4.用正则表达式实现html解码*/
+                /* 4.用正则表达式实现html解码 */
                 htmlDecodeByRegExp: function (str){ 
                     var s = "";
                     if(str.length == 0) return "";
