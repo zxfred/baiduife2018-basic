@@ -200,11 +200,13 @@
                 let v = getInputValue()
                 let list = postfixList
                 let content = []
-                if (v.indexOf('@') !== -1) { // 如果用户已经输入@
-                    let index = v.indexOf('@') // 获取索引
-                    let preStr = v.slice(0, index) // 用来拼接的内容
-                    let sufStr = v.slice(index + 1, v.length) // 用来前缀匹配的内容
+                let preStr = '',
+                    sufStr = ''
+                let index = v.indexOf('@') // 获取索引
 
+                if (index !== -1) {
+                    preStr = v.slice(0, index) // 用来拼接的内容
+                    sufStr = v.slice(index + 1, v.length) // 用来前缀匹配的内容
                     for(let i = 0; i < list.length; i++){
                         let li = document.createElement('li')
                         if (list[i].indexOf(sufStr) !== -1) { // 匹配前缀, 才显示提示
@@ -212,21 +214,18 @@
                             content.push(li)
                         }
                     }
+                } else {
+                    preStr = v
+                }
 
-                    if (content.length === 0) { // 当用户输入不满足任何前缀匹配时，则显示全部提示
-                        for(let i = 0; i < list.length; i++){
-                            let li = document.createElement('li')
-                            li.innerHTML = preStr + '@' + list[i]
-                            content.push(li)
-                        }
-                    }
-                } else { // 如果用户没有输入@，则显示全部提示
+                if (content.length === 0) { // 当用户输入不满足任何前缀匹配, 或者没有输入@时，则显示全部提示
                     for(let i = 0; i < list.length; i++){
                         let li = document.createElement('li')
-                        li.innerHTML = v + '@' + list[i]
+                        li.innerHTML = preStr + '@' + list[i]
                         content.push(li)
                     }
                 }
+
                 return content
             }
 
