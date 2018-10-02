@@ -81,7 +81,7 @@
             let sug = document.getElementById('email-sug-wrapper')
 
             emailInput.addEventListener('input', (e) => {
-                console.log(e)
+                //console.log(e)
                 document.addEventListener('keydown', listenKey) 
 
                 function listenKey(e) {
@@ -159,7 +159,7 @@
                 return v
             }
 
-            // 事件冒泡, 点击把内容放在输入框中
+            // 事件冒泡, 点击后把内容放在输入框中
             sug.addEventListener('click',function(e){
                 if(e.target && e.target.nodeName.toUpperCase() == 'LI'){ // 判断目标事件是否为li
                     emailInput.value = e.target.innerHTML
@@ -200,10 +200,13 @@
                 let v = getInputValue()
                 let list = postfixList
                 let content = []
+                
+                v = HtmlUtil.htmlEncode(v)
+                console.log(v)
+
                 let preStr = '',
                     sufStr = ''
                 let index = v.indexOf('@') // 获取索引
-
                 if (index !== -1) {
                     preStr = v.slice(0, index) // 用来拼接的内容
                     sufStr = v.slice(index + 1, v.length) // 用来前缀匹配的内容
@@ -228,6 +231,8 @@
 
                 return content
             }
+
+            /* 转码部分引用自网络 */
 
             let HtmlUtil = {
                 /* 1.用浏览器内部转换器实现html转码 */
