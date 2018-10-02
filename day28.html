@@ -81,16 +81,6 @@
             let sug = document.getElementById('email-sug-wrapper')
 
             emailInput.addEventListener('input', (e) => {
-                //console.log(e)
-                document.addEventListener('keydown', listenKey) 
-
-                function listenKey(e) {
-                    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp' && e.key !== 'Enter') {
-
-                    }
-                    document.removeEventListener('keyup', listenKey)
-                }
-
                 updateSug()
                 showSugOrNot()
                 resetSelectStatus()
@@ -102,30 +92,19 @@
                     if (e.key === 'Escape') { // 这里如果是 keypress 事件, 捕获不到 Esc 这个键, 故改为 keydown 事件
                         hideSug()
                     }
+
+                    if (e.key === 'ArrowDown') {
+                        console.log(111)
+                    }
+                    if (e.key === 'ArrowUp') {
+
+                    }
+                    if (e.key === 'Enter') {
+
+                    }
+
                 })
             })
-
-            // 需要修改一下之前的inputDom的输入监听
-            // inputDom的输入监听 = function() {
-            //     // 新增
-            //     如果按键不是上下及回车重置选中状态()
-
-            //     获取用户输入，生成提示框中的提示内容，将提示内容添加到email-sug-wrapper中
-            //     控制email-sug-wrapper的显示/隐藏状态    
-            // }
-
-            function resetSelectStatus() {
-                let lis = sug.querySelectorAll('li')
-                for(let i = 0; i < lis.length; i++){ // 遍历所有子元素
-                    if (lis[i].className.indexOf('selected') != -1) {
-                        if (i != 0) {  // 如果当前选中状态Li不是第一个
-                            lis[i].className = '' // 清除掉它的选中状态
-                            lis[0].className = 'selected' // 设置第一个Li为选中状态
-                        }
-                        break
-                    }
-                }
-            }
 
             // 监听特殊3个键的键盘事件，这个事件可能就是inputDom的输入监听，也有可能是另外一个，请自己测试后判断
             // 监听特殊3个键的键盘事件 = function() {
@@ -151,6 +130,19 @@
             //         隐藏提示框
             //     }
             // }
+
+            function resetSelectStatus() {
+                let lis = sug.querySelectorAll('li')
+                for(let i = 0; i < lis.length; i++){ // 遍历所有子元素
+                    if (lis[i].className.indexOf('selected') != -1) {
+                        if (i != 0) {  // 如果当前选中状态Li不是第一个
+                            lis[i].className = '' // 清除掉它的选中状态
+                            lis[0].className = 'selected' // 设置第一个Li为选中状态
+                        }
+                        break
+                    }
+                }
+            }
 
             function getInputValue() {
                 // 拿到input输入框的输入内容trim后返回
