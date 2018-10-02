@@ -162,7 +162,7 @@
             // 事件冒泡, 点击后把内容放在输入框中
             sug.addEventListener('click',function(e){
                 if(e.target && e.target.nodeName.toUpperCase() == 'LI'){ // 判断目标事件是否为li
-                    emailInput.value = e.target.innerHTML
+                    emailInput.value = HtmlUtil.htmlDecode(e.target.innerHTML) // 进行解码
                     hideSug()
                 }
             }, false);
@@ -201,8 +201,7 @@
                 let list = postfixList
                 let content = []
                 
-                v = HtmlUtil.htmlEncode(v)
-                console.log(v)
+                v = HtmlUtil.htmlEncode(v) // 进行转码防止 XSS 攻击
 
                 let preStr = '',
                     sufStr = ''
@@ -233,9 +232,8 @@
             }
 
             /* 转码部分引用自网络 */
-
             let HtmlUtil = {
-                /* 1.用浏览器内部转换器实现html转码 */
+                /* 用浏览器内部转换器实现html转码 */
                 htmlEncode: function (html){
                     //1.首先动态创建一个容器标签元素，如DIV
                     var temp = document.createElement ("div");
@@ -246,7 +244,8 @@
                     temp = null;
                     return output;
                 },
-                /* 2.用浏览器内部转换器实现html解码 */
+
+                /* 用浏览器内部转换器实现html解码 */
                 htmlDecode: function (text){
                     //1.首先动态创建一个容器标签元素，如DIV
                     var temp = document.createElement("div");
@@ -256,30 +255,6 @@
                     var output = temp.innerText || temp.textContent;
                     temp = null;
                     return output;
-                },
-                /* 3.用正则表达式实现html转码 */
-                htmlEncodeByRegExp: function (str){ 
-                    var s = "";
-                    if(str.length == 0) return "";
-                    s = str.replace(/&/g,"&");
-                    s = s.replace(/</g,"<");
-                    s = s.replace(/>/g,">");
-                    s = s.replace(/ /g," ");
-                    s = s.replace(/\'/g,"'");
-                    s = s.replace(/\"/g,'"');
-                    return s; 
-                },
-                /* 4.用正则表达式实现html解码 */
-                htmlDecodeByRegExp: function (str){ 
-                    var s = "";
-                    if(str.length == 0) return "";
-                    s = str.replace(/&/g,"&");
-                    s = s.replace(/</g,"<");
-                    s = s.replace(/>/g,">");
-                    s = s.replace(/ /g," ");
-                    s = s.replace(/'/g,"\'");
-                    s = s.replace(/"/g,"\"");
-                    return s; 
                 }
             };
 
