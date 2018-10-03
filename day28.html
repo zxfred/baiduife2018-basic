@@ -93,43 +93,30 @@
                         hideSug()
                     }
 
+                    //     找到当前为选中状态的Li
+                    //     清除掉它的选中状态
                     if (e.key === 'ArrowDown') {
-                        console.log(111)
+                        //         if 找到的Li不是最后一个 {
+                        //             将它的下一个Li设为选中
+                        //         } else {
+                        //             将第一个Li设为选中
+                        //         }
                     }
+
                     if (e.key === 'ArrowUp') {
-
+                        //         if 找到的Li不是第一个 {
+                        //             将它的前一个Li设为选中
+                        //         } else {
+                        //             将最后一个Li设为选中
+                        //         }
                     }
+
                     if (e.key === 'Enter') {
-
+                        //         将找到的Li的HTML内容解码后填到input中
+                        //         隐藏提示框
                     }
-
                 })
             })
-
-            // 监听特殊3个键的键盘事件，这个事件可能就是inputDom的输入监听，也有可能是另外一个，请自己测试后判断
-            // 监听特殊3个键的键盘事件 = function() {
-            //     找到当前为选中状态的Li
-            //     清除掉它的选中状态
-            //     if 按的是上键 {
-            //         if 找到的Li不是第一个 {
-            //             将它的前一个Li设为选中
-            //         } else {
-            //             将最后一个Li设为选中
-            //         }
-            //     }
-            //     if 按的是下键 {
-            //         if 找到的Li不是最后一个 {
-            //             将它的下一个Li设为选中
-            //         } else {
-            //             将第一个Li设为选中
-            //         }
-            //     }
-
-            //     if 按的是回车 {
-            //         将找到的Li的HTML内容解码后填到input中
-            //         隐藏提示框
-            //     }
-            // }
 
             function resetSelectStatus() {
                 let lis = sug.querySelectorAll('li')
