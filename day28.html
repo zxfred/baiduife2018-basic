@@ -83,12 +83,10 @@
             emailInput.addEventListener('input', (e) => {
                 updateSug()
                 showSugOrNot()
-                resetSelectStatus()
             }) 
 
             // 按 esc 关闭提示框
             emailInput.addEventListener('focus', function () {
-                resetSelectStatus() // 重置选中状态
                 document.addEventListener('keydown', (e) => { // 按键信息对象e以函数参数的形式传递
                     if (e.key === 'Escape') { // 这里如果是 keypress 事件, 捕获不到 Esc 这个键, 故改为 keydown 事件
                         hideSug()
@@ -97,30 +95,33 @@
                     // 上下与回车按键
                     if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter') {
                         let lis = sug.querySelectorAll('li')
+
                         for(let i = 0; i < lis.length; i++){ // 遍历所有子元素
                             if (lis[i].className.indexOf('selected') != -1) { // 找到当前为选中状态的Li
-                                    if (e.key === 'ArrowUp') {
-                                        if (i != lis.length) {  // 如果当前选中状态Li不是最后一个
-                                            lis[i+1].className = 'selected' // 将它的后一个Li设为选中
-                                        } else {
-                                            lis[0].className = 'selected' // 设置第一个Li为选中状态
-                                        }
+                                if (e.key === 'ArrowDown') {
+                                    console.log(i)
+                                    lis[i].className = ''
+                                    if (i != lis.length) {
+                                        lis[i+1].className = 'selected'
+                                    } else {
+                                        lis[0].className = 'selected'
                                     }
+                                }
 
-                                    if (e.key === 'ArrowDown') {
-                                        lis[i].className = '' // 清除掉它的选中状态
-                                        if (i != 0) {  // 找到的Li不是第一个
-                                            lis[i-1].className = 'selected' // 将它的前一个Li设为选中
-                                        } else {
-                                            lis[0].className = 'selected' // 设置第一个Li为选中状态
-                                        }
+                                if (e.key === 'ArrowUp') {
+                                    console.log(i)
+                                    lis[i].className = ''
+                                    if (i != 0) {
+                                        lis[i-1].className = 'selected'
+                                    } else {
+                                        lis[0].className = 'selected'
                                     }
+                                }
 
-                                    if (e.key === 'Enter') {
-                                    //         将找到的Li的HTML内容解码后填到input中
-                                    //         隐藏提示框
-                                    }
-
+                                if (e.key === 'Enter') {
+                                //         将找到的Li的HTML内容解码后填到input中
+                                //         隐藏提示框
+                                }
                                 break
                             }
                         }
@@ -184,7 +185,7 @@
             }
 
             function showSug() {
-                sug.style.display = 'block'                
+                sug.style.display = 'block'        
             }
 
             function generateHints() {
