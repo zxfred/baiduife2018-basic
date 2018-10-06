@@ -68,7 +68,7 @@
 
 <body>
     <div class="wrapper">
-        <input id="email-input" type="text">
+        <input id="email-input" type="text" autofocus="autofocus">
         <ul id="email-sug-wrapper" class="email-sug"></ul>
     </div>
 
@@ -101,13 +101,15 @@
                 // 按 esc 关闭提示框
                 if (e.key === 'Escape') { // 这里如果是 keypress 事件, 捕获不到 Esc 这个键, 故改为 keydown 事件
                     hideSug()
+                    emailInput.select() // 选中输入框所有内容
                 }
 
                 // 上下与回车按键操作
                 if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter') {
+                    let v = getInputValue()
+                    if (v === '') return // 如果输入框没有内容, 不执行
                     let lis = sug.querySelectorAll('li')
                     let find = false // 是否找到选中状态的 Li
-
                     for(let i = 0; i < lis.length; i++){ // 遍历所有子元素
                         if (lis[i].className.indexOf('selected') != -1) { // 找到当前为选中状态的Li
                             find = true
@@ -162,11 +164,12 @@
                 if(e.target && e.target.nodeName.toUpperCase() == 'LI'){ // 判断目标事件是否为li
                     emailInput.value = HtmlUtil.htmlDecode(e.target.innerHTML) // 进行解码
                     hideSug()
+                    emailInput.focus() // 使填入内容后, 输入框仍然获得焦点
                 }
             }, false);
 
             function updateSug() {
-                // 获取生成提示框中的提示内容, 将内容添加到email - sug - wrapper中
+                // 获取生成提示框中的提示内容, 将内容添加到email-sug-wrapper中
                 let content = generateHints()
                 sug.innerHTML = ''
                 if (content.length > 0) {
