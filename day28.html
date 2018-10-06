@@ -106,12 +106,14 @@
                 // 上下与回车按键操作
                 if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter') {
                     let lis = sug.querySelectorAll('li')
+                    let find = false // 是否找到选中状态的 Li
+
                     for(let i = 0; i < lis.length; i++){ // 遍历所有子元素
                         if (lis[i].className.indexOf('selected') != -1) { // 找到当前为选中状态的Li
+                            find = true
                             if (e.key === 'ArrowDown') {
-                                console.log(i)
                                 lis[i].className = ''
-                                if (i != lis.length) {
+                                if (i != lis.length - 1) {
                                     lis[i+1].className = 'selected'
                                 } else {
                                     lis[0].className = 'selected'
@@ -119,7 +121,6 @@
                             }
 
                             if (e.key === 'ArrowUp') {
-                                console.log(i)
                                 lis[i].className = ''
                                 if (i != 0) {
                                     lis[i-1].className = 'selected'
@@ -128,29 +129,25 @@
                                 }
                             }
 
-                            if (e.key === 'Enter') {
-                            //         将找到的Li的HTML内容解码后填到input中
-                            //         隐藏提示框
+                            if (e.key === 'Enter') { 
+                                // 将找到的Li的HTML内容解码后填到input中, 隐藏提示框
+                                emailInput.value = HtmlUtil.htmlDecode(lis[i].innerHTML) // 进行解码
+                                hideSug()
                             }
                             break
                         }
                     }
-                }
-            }
-
-            function resetSelectStatus() {
-                let lis = sug.querySelectorAll('li')
-                for(let i = 0; i < lis.length; i++){ // 遍历所有子元素
-                    if (lis[i].className.indexOf('selected') != -1) {
-                        if (i != 0) {  // 如果当前选中状态Li不是第一个
-                            lis[i].className = '' // 清除掉它的选中状态
-                            lis[0].className = 'selected' // 设置第一个Li为选中状态
+                    // 如果没有找到Li
+                    if (!find) {
+                        if (e.key === 'ArrowDown') {
+                            lis[0].className = 'selected'
                         }
-                        break
-                    } else {
-                        lis[0].className = 'selected' // 设置第一个Li为选中状态
+                        if (e.key === 'ArrowUp') {
+                            lis[lis.length - 1].className = 'selected'
+                        }
                     }
                 }
+
             }
 
             function getInputValue() {
