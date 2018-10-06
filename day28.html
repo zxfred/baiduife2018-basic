@@ -80,26 +80,30 @@
             let emailInput = document.getElementById('email-input')
             let sug = document.getElementById('email-sug-wrapper')
 
+            // 监听输入事件
             emailInput.addEventListener('input', (e) => {
                 updateSug()
                 showSugOrNot()
             }) 
 
-            // 按 esc 关闭提示框
+            // 获得焦点时监听键盘事件
             emailInput.addEventListener('focus', function () {
                 document.addEventListener('keydown', listenKey)
             })
 
+            // 失去焦点时取消监听键盘事件
             emailInput.addEventListener('blur', function () {
                 document.removeEventListener('keydown', listenKey)
             })
 
             function listenKey (e) {
+                
+                // 按 esc 关闭提示框
                 if (e.key === 'Escape') { // 这里如果是 keypress 事件, 捕获不到 Esc 这个键, 故改为 keydown 事件
-                        hideSug()
-                    }
+                    hideSug()
+                }
 
-                // 上下与回车按键
+                // 上下与回车按键操作
                 if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter') {
                     let lis = sug.querySelectorAll('li')
                     for(let i = 0; i < lis.length; i++){ // 遍历所有子元素
